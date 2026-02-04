@@ -111,15 +111,24 @@
 
             <div style="padding: 16px; border-top: 1px solid var(--border-soft);">
                 <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">System Status</div>
-                <div id="dbStatus" class="badge badge-low">Online</div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div id="dbStatus" class="badge badge-low">Online</div>
+                    <button class="btn btn-xs btn-secondary mobile-only"
+                        onclick="document.getElementById('logoutBtn').click()" style="display: none;">Logout</button>
+                </div>
             </div>
         </aside>
+
+        <!-- SIDEBAR OVERLAY -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
 
         <!-- MAIN CONTENT -->
         <main class="main-content">
             <!-- HEADER -->
             <header class="header">
                 <div class="header-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
                     <h1 class="header-title">CCAD Support Bible</h1>
                     <span class="header-subtitle">| Honeywell Tier-1 Support Command Center</span>
                 </div>
@@ -764,6 +773,29 @@
         });
 
         async function initializeApplication() {
+            // Mobile Sidebar Toggle
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const menuBtn = document.getElementById('mobileMenuBtn');
+
+            function toggleSidebar() {
+                sidebar.classList.toggle('mobile-open');
+                overlay.classList.toggle('active');
+            }
+
+            menuBtn?.addEventListener('click', toggleSidebar);
+            overlay?.addEventListener('click', toggleSidebar);
+
+            // Close sidebar when clicking menu items on mobile
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    if (window.innerWidth <= 992) {
+                        sidebar.classList.remove('mobile-open');
+                        overlay.classList.remove('active');
+                    }
+                });
+            });
+
             updateUIVisibility();
             await loadDashboardData();
             navigateTo('dashboard');

@@ -1405,6 +1405,127 @@ a:hover {
 }
 
 /* ============================================
+   RESPONSIVE DESIGN (MOBILE & TABLET)
+   ============================================ */
+
+/* Mobile Menu Button - Hidden by default */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  margin-right: 12px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+.mobile-menu-btn:hover {
+  background: var(--bg-tertiary);
+}
+
+/* Sidebar Overlay */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 95;
+}
+
+@media (max-width: 992px) {
+  :root {
+    --sidebar-width: 280px;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.8);
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+  }
+
+  .header {
+    padding: 0 12px;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-subtitle {
+    display: none;
+  }
+
+  .search-box {
+    width: 150px;
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .content {
+    padding: 16px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .header-right .btn-secondary {
+    display: none;
+    /* Hide logout from header on mobile */
+  }
+
+  .search-box {
+    width: 110px;
+    /* Even smaller search for tiny screens */
+  }
+
+  .theme-toggle {
+    padding: 2px;
+  }
+
+  .theme-btn {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
+  .header-title {
+    font-size: 14px;
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mobile-only {
+    display: inline-flex !important;
+  }
+}
+
+/* ============================================
    SELECTION STYLES
    ============================================ */
 ::selection {
