@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | RTLS Master Console</title>
+    <style>
+        body {
+            background: #090909;
+            color: #ccc;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-box {
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            padding: 2rem;
+            border-radius: 16px;
+            width: 350px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        b {
+            font-weight: 800;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #EE3124;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            filter: brightness(1.2);
+        }
+
+        .error {
+            color: #ff4444;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-box">
+        <h2>Honeywell <b>RTLS</b></h2>
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+        <form method="POST">
+            <input type="text" name="username" placeholder="Username" required autofocus>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Access Dashboard</button>
+        </form>
+    </div>
+</body>
+
+</html>

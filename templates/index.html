@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCAD Support Bible - Honeywell Tier-1 Command Center</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+
+<body>
+    <!-- LOGIN OVERLAY -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <div class="login-logo">
+                <div class="hw-logo">HONEYWELL</div>
+                <div class="ccad-sub">CCAD Support Bible v2.0 (Online)</div>
+            </div>
+            <div class="login-title">Honeywell Tier-1 Support</div>
+            <div class="login-subtitle">Internal CCAD RTLS Knowledge Base - Authorized Personnel Only</div>
+
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="loginUsername" class="form-input" placeholder="Enter username"
+                    autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" class="form-input" placeholder="Enter password"
+                    autocomplete="off">
+            </div>
+
+            <button class="btn btn-primary btn-block" id="loginBtn">Access Knowledge Base</button>
+            <div id="loginError" class="login-error"
+                style="display:none; color: var(--status-critical); margin-top: 10px; font-size: 12px; text-align: center;">
+            </div>
+
+            <div style="margin-top: 20px; text-align: center;">
+                <p style="font-size: 11px; color: var(--text-muted);">For authorized Honeywell Tier-1 engineers
+                    supporting CCAD</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APPLICATION -->
+    <div class="app-container" id="appContainer" style="display: none;">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">📘 CCAD Support</div>
+                <div class="sidebar-subtitle">Online Command Center</div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <div class="nav-item active" data-page="dashboard">
+                        <span class="icon">🏠</span>
+                        <span>Dashboard</span>
+                    </div>
+                    <div class="nav-item" data-page="faq">
+                        <span class="icon">❓</span>
+                        <span>FAQ Library</span>
+                    </div>
+                    <div class="nav-item" data-page="troubleshooting">
+                        <span class="icon">🛠️</span>
+                        <span>Troubleshooting</span>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Operations</div>
+                    <div class="nav-item" data-page="logs">
+                        <span class="icon">📞</span>
+                        <span>Call Logs</span>
+                    </div>
+                    <div class="nav-item" data-page="analytics">
+                        <span class="icon">📊</span>
+                        <span>Analytics</span>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Tools</div>
+                    <div class="nav-item" data-page="escalation">
+                        <span class="icon">📤</span>
+                        <span>Escalation Center</span>
+                    </div>
+                    <div class="nav-item" data-page="equipment">
+                        <span class="icon">📋</span>
+                        <span>Equipment Ref</span>
+                    </div>
+                    <div class="nav-item" data-page="tier-matrix">
+                        <span class="icon">⚖️</span>
+                        <span>Tier-1 vs Tier-2</span>
+                    </div>
+                </div>
+                <div class="nav-section admin-only" style="display: none;">
+                    <div class="nav-section-title">Administration</div>
+                    <div class="nav-item" data-page="user-mgmt">
+                        <span class="icon">👤</span>
+                        <span>User Management</span>
+                    </div>
+                    <div class="nav-item" data-page="kb-mgmt">
+                        <span class="icon">💾</span>
+                        <span>KB Import/Export</span>
+                    </div>
+                </div>
+            </nav>
+
+            <div style="padding: 16px; border-top: 1px solid var(--border-soft);">
+                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">System Status</div>
+                <div id="dbStatus" class="badge badge-low">Online</div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="header-title">CCAD Support Bible</h1>
+                    <span class="header-subtitle">| Honeywell Tier-1 Support Command Center</span>
+                </div>
+
+                <div class="header-right">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="globalSearch" placeholder="Search FAQs, troubleshooting, equipment...">
+                    </div>
+
+                    <div class="theme-toggle">
+                        <button class="theme-btn active" data-theme="hw">HW</button>
+                        <button class="theme-btn" data-theme="light">Light</button>
+                        <button class="theme-btn" data-theme="dark">Dark</button>
+                    </div>
+
+                    <button class="btn btn-sm btn-secondary" id="logoutBtn">Logout</button>
+                </div>
+            </header>
+
+            <!-- CONTENT AREA -->
+            <div class="content">
+                <!-- DASHBOARD PAGE -->
+                <section id="page-dashboard" class="page active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">❓</div>
+                            <div class="stat-content">
+                                <h3 id="statFaqCount">0</h3>
+                                <p>Total FAQs</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🛠️</div>
+                            <div class="stat-content">
+                                <h3 id="statTsCount">0</h3>
+                                <p>Troubleshooting Guides</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">📁</div>
+                            <div class="stat-content">
+                                <h3 id="statCategories">0</h3>
+                                <p>Categories</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">📤</div>
+                            <div class="stat-content">
+                                <h3 id="statEscalations">5</h3>
+                                <p>Escalation Templates</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+                        <!-- Quick Actions -->
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">🚀 Quick Actions</div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                                <button class="quick-action-btn" data-action="faq">
+                                    <span class="icon">❓</span>
+                                    <span>Browse FAQs</span>
+                                </button>
+                                <button class="quick-action-btn" data-action="ts">
+                                    <span class="icon">🛠️</span>
+                                    <span>Troubleshooting</span>
+                                </button>
+                                <button class="quick-action-btn" data-action="escalate">
+                                    <span class="icon">📤</span>
+                                    <span>Escalate to Centrak</span>
+                                </button>
+                                <button class="quick-action-btn" data-action="equipment">
+                                    <span class="icon">📋</span>
+                                    <span>Equipment Ref</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">📋 Recent Activity</div>
+                            </div>
+                            <div id="activityFeed" style="max-height: 200px; overflow-y: auto;">
+                                <div class="empty-state" style="padding: 20px;">
+                                    <p style="color: var(--text-muted); font-size: 13px;">No recent activity</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FAQ PAGE -->
+                <section id="page-faq" class="page" style="display: none;">
+                    <div class="card">
+                        <div class="card-header" style="justify-content: space-between;">
+                            <div style="display:flex; flex-direction:column;">
+                                <div class="card-title">❓ FAQ Library</div>
+                                <div class="card-subtitle">Browse and search frequently asked questions</div>
+                            </div>
+                            <div class="admin-only" style="display:none;">
+                                <button class="btn btn-sm btn-primary" id="addFaqBtn">+ Add FAQ</button>
+                            </div>
+                        </div>
+
+                        <div class="toolbar">
+                            <div class="toolbar-filters">
+                                <select class="filter-select" id="faqCategoryFilter">
+                                    <option value="all">All Categories</option>
+                                    <option>Login & Access</option>
+                                    <option>Maps & Location</option>
+                                    <option>Tags & Assets</option>
+                                    <option>Rule Triggering</option>
+                                    <option>MFA Issues</option>
+                                    <option>System Performance</option>
+                                    <option>Reporting</option>
+                                </select>
+
+                                <input type="text" class="filter-select" id="faqSearch" placeholder="Search FAQs..."
+                                    style="width: 250px;">
+                                <select class="filter-select" id="faqSort">
+                                    <option value="id-asc">ID (Oldest First)</option>
+                                    <option value="id-desc">ID (Newest First)</option>
+                                    <option value="question-asc">Question (A-Z)</option>
+                                    <option value="category-asc">Category</option>
+                                </select>
+                            </div>
+
+                            <div class="toolbar-actions">
+                                <button class="btn btn-sm btn-secondary" id="expandAllFaqs">Expand All</button>
+                                <button class="btn btn-sm btn-secondary" id="collapseAllFaqs">Collapse All</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="faqList">
+                        <div class="loading-spinner" style="margin: 40px auto;"></div>
+                    </div>
+                </section>
+
+                <!-- TROUBLESHOOTING PAGE -->
+                <section id="page-troubleshooting" class="page" style="display: none;">
+                    <div class="card">
+                        <div class="card-header" style="justify-content: space-between;">
+                            <div style="display:flex; flex-direction:column;">
+                                <div class="card-title">🛠️ Troubleshooting Guides</div>
+                                <div class="card-subtitle">Step-by-step troubleshooting procedures</div>
+                            </div>
+                            <div class="admin-only" style="display:none;">
+                                <button class="btn btn-sm btn-primary" id="addTsBtn">+ Add Guide</button>
+                            </div>
+                        </div>
+
+                        <div class="toolbar">
+                            <div class="toolbar-filters">
+                                <select class="filter-select" id="tsCategoryFilter">
+                                    <option value="all">All Categories</option>
+                                    <option>Hardware Failure</option>
+                                    <option>Software Error</option>
+                                    <option>Connectivity</option>
+                                    <option>Calibration</option>
+                                    <option>User Permission</option>
+                                    <option>Sync Issues</option>
+                                    <option>Access & Login</option>
+                                    <option>Maps & Location</option>
+                                </select>
+
+                                <input type="text" class="filter-select" id="tsSearch"
+                                    placeholder="Search troubleshooting..." style="width: 250px;">
+                                <select class="filter-select" id="tsSort">
+                                    <option value="id-asc">ID (Oldest First)</option>
+                                    <option value="id-desc">ID (Newest First)</option>
+                                    <option value="title-asc">Title (A-Z)</option>
+                                    <option value="priority-desc">Priority (High-Low)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tsList">
+                        <div class="loading-spinner" style="margin: 40px auto;"></div>
+                    </div>
+                </section>
+
+                <!-- ESCALATION PAGE -->
+                <section id="page-escalation" class="page" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">📤 Centrak Escalation Center</div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                            <div>
+                                <h4 style="margin-bottom:12px; color:var(--text-secondary);">Templates</h4>
+                                <div id="escalationTemplatesList"></div>
+                            </div>
+                            <div>
+                                <h4 style="margin-bottom:12px; color:var(--text-secondary);">Ticket Builder</h4>
+                                <div class="form-group"><label>Summary</label><input type="text" id="escSummary"
+                                        class="form-input"></div>
+                                <div class="form-group"><label>Symptoms</label><textarea id="escSymptoms"
+                                        class="form-input" rows="3"></textarea></div>
+                                <div class="form-group"><label>Actions</label><textarea id="escActions"
+                                        class="form-input" rows="3"></textarea></div>
+                                <div class="form-group"><label>Priority</label>
+                                    <select id="escPriority" class="form-input">
+                                        <option value="High">High</option>
+                                        <option value="Medium">Medium</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-primary"
+                                    onclick="alert('Ticket Generated (Mock)');">Generate</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CALL LOG PAGE -->
+                <section id="page-logs" class="page" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">📞 Support Call Logs</div>
+                            <div class="card-subtitle">Detailed record of technical support sessions</div>
+                            <div style="margin-top:10px;">
+                                <button class="btn btn-xs btn-secondary" onclick="exportLogsToCSV()">Export to
+                                    CSV</button>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 350px 1fr; gap: 24px;">
+                            <div class="log-form">
+                                <h4 style="margin-bottom:12px; color:var(--text-secondary);">New Entry</h4>
+                                <div class="form-group"><label>Asset Tag</label><input type="text" id="logAsset"
+                                        class="form-input"></div>
+                                <div class="form-group"><label>Category</label>
+                                    <select id="logCategory" class="form-input">
+                                        <option>Login & Access</option>
+                                        <option>Map Issue</option>
+                                        <option>Tag Behavior</option>
+                                        <option>MFA/Horizon</option>
+                                    </select>
+                                </div>
+                                <div class="form-group"><label>Issue Description</label><textarea id="logDesc"
+                                        class="form-input" rows="3"></textarea></div>
+                                <div class="form-group"><label>Resolution</label><textarea id="logResolution"
+                                        class="form-input" rows="2"></textarea></div>
+                                <div class="form-group"><label>Root Cause</label><input type="text" id="logRootCause"
+                                        class="form-input"></div>
+                                <div class="form-group"><label>Operator</label><input type="text" id="logOperator"
+                                        class="form-input" value="{{ session.get('username') }}"></div>
+                                <button class="btn btn-primary btn-block" onclick="submitCallLog()">Save Entry</button>
+                            </div>
+                            <div class="log-history">
+                                <h4 style="margin-bottom:12px; color:var(--text-secondary);">Recent History</h4>
+                                <div id="logTableContainer" style="max-height: 500px; overflow-y: auto;">
+                                    <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                                        <thead>
+                                            <tr style="border-bottom:1px solid var(--border-soft); text-align:left;">
+                                                <th style="padding:10px;">Date</th>
+                                                <th style="padding:10px;">Asset</th>
+                                                <th style="padding:10px;">Category</th>
+                                                <th style="padding:10px;">Operator</th>
+                                                <th style="padding:10px;">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="logTableBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ANALYTICS PAGE -->
+                <section id="page-analytics" class="page" style="display: none;">
+                    <div class="grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">📊 Top Issue Categories</div>
+                            </div>
+                            <div id="chartCategories" style="padding:20px;"></div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">⚠️ Problematic Assets</div>
+                            </div>
+                            <div id="chartAssets" style="padding:20px;"></div>
+                        </div>
+                        <div class="card" style="grid-column: span 2;">
+                            <div class="card-header">
+                                <div class="card-title">📈 System Health Over Time</div>
+                            </div>
+                            <div style="padding:40px; text-align:center; color:var(--text-muted);">Cumulative data
+                                visualization in progress...</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TIER MATRIX PAGE -->
+                <section id="page-tier-matrix" class="page" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">⚖️ Tier-1 vs Tier-2 Responsibility Matrix</div>
+                        </div>
+                        <table
+                            style="width:100%; border-collapse:collapse; color:var(--text-secondary); font-size:14px;">
+                            <thead>
+                                <tr style="border-bottom:1px solid var(--border-medium); text-align:left;">
+                                    <th style="padding:10px;">Issue Category</th>
+                                    <th style="padding:10px;">Tier-1 (Honeywell) Owns</th>
+                                    <th style="padding:10px;">Tier-2 (Centrak) Owns</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--border-soft);">
+                                    <td style="padding:10px;"><strong>Login & Access</strong></td>
+                                    <td style="padding:10px;">Verify credentials, browser issues, MFA</td>
+                                    <td style="padding:10px;">Backend auth, SSO/Horizon integration</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-soft);">
+                                    <td style="padding:10px;"><strong>Map Visibility</strong></td>
+                                    <td style="padding:10px;">Facility filters, XY layer toggle</td>
+                                    <td style="padding:10px;">Map alignment, ingestion, calibration</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-soft);">
+                                    <td style="padding:10px;"><strong>Tag Behavior</strong></td>
+                                    <td style="padding:10px;">Commissioning, battery checks</td>
+                                    <td style="padding:10px;">RF coverage analysis, backend processing</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="page-equipment" class="page" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">📋 Equipment Reference</div>
+                            <div class="toolbar-actions admin-only" style="display:none;">
+                                <button class="btn btn-sm btn-primary" onclick="openEquipmentModal()">+ Add
+                                    Equipment</button>
+                            </div>
+                        </div>
+                        <div id="equipmentList"></div>
+                    </div>
+                </section>
+
+                <!-- ADMIN: USER MGMT -->
+                <section id="page-user-mgmt" class="page" style="display:none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">👤 User Management</div>
+                        </div>
+                        <div id="userList" style="padding:20px;"></div>
+                    </div>
+                </section>
+
+                <!-- ADMIN: KB MGMT -->
+                <section id="page-kb-mgmt" class="page" style="display:none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">💾 Knowledge Base Import/Export</div>
+                        </div>
+                        <div style="padding:20px; display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                            <div class="card" style="background:var(--bg-tertiary);">
+                                <h4>Export KB</h4>
+                                <p style="font-size:12px; color:var(--text-muted);">Download the entire database as a
+                                    JSON file for backup.</p>
+                                <button class="btn btn-secondary" onclick="exportKB()">Download JSON</button>
+                            </div>
+                            <div class="card" style="background:var(--bg-tertiary);">
+                                <h4>Import KB</h4>
+                                <p style="font-size:12px; color:var(--text-muted);">Restore database from a compatible
+                                    JSON file. WARNING: This may overwrite existing data.</p>
+                                <input type="file" id="kbImportFile" style="display:none;" onchange="importKB(this)">
+                                <button class="btn btn-danger"
+                                    onclick="document.getElementById('kbImportFile').click()">Select & Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+        </main>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- API ADAPTER -->
+    <script>
+        // Flask API Adapter
+        const DB = {
+            async getAll(storeName) {
+                if (storeName === 'equipment') {
+                    const res = await fetch('/api/equipment');
+                    const data = await res.json();
+                    return data.data || [];
+                }
+                const type = storeName === 'faqs' ? 'faq' : 'troubleshooting';
+                const res = await fetch(`/api/kb?type=${type}&per_page=1000`);
+                if (!res.ok) return [];
+                const data = await res.json();
+                const items = data.data || [];
+
+                if (type === 'faq') {
+                    return items.map(item => ({
+                        id: item.id,
+                        question: item.question,
+                        answer: item.answer,
+                        category: item.category
+                    }));
+                } else {
+                    return items.map(item => {
+                        try {
+                            const struct = JSON.parse(item.answer);
+                            return { ...struct, id: item.id };
+                        } catch (e) {
+                            return {
+                                id: item.id,
+                                title: item.question,
+                                category: item.category,
+                                priority: 'Medium',
+                                symptoms: [],
+                                tier1Steps: [{ step: 1, action: item.answer }],
+                                relatedFaqs: []
+                            };
+                        }
+                    });
+                }
+            },
+
+            async put(storeName, item) {
+                let payload;
+                if (storeName === 'faqs') {
+                    payload = { id: item.id, type: 'faq', category: item.category, question: item.question, answer: item.answer };
+                } else if (storeName === 'troubleshooting') {
+                    payload = { id: item.id, type: 'troubleshooting', category: item.category, question: item.title, answer: JSON.stringify(item) };
+                }
+                return fetch('/api/kb', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            },
+
+            async update(storeName, item) {
+                let payload;
+                if (storeName === 'faqs') {
+                    payload = { id: item.id, type: 'faq', category: item.category, question: item.question, answer: item.answer };
+                } else if (storeName === 'troubleshooting') {
+                    payload = { id: item.id, type: 'troubleshooting', category: item.category, question: item.title, answer: JSON.stringify(item) };
+                }
+                return fetch('/api/kb', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            },
+
+            async delete(storeName, id) {
+                await fetch(`/api/kb?id=${id}`, { method: 'DELETE' });
+            },
+
+            async count(storeName) { return 0; }
+        };
+
+        const SESSION = {
+            username: "{{ session.get('username', 'Guest') }}",
+            role: "{{ session.get('role', 'client') }}"
+        };
+
+        function updateUIVisibility() {
+            const role = SESSION.role;
+            document.querySelectorAll('.admin-only').forEach(el => {
+                el.style.display = (role === 'admin') ? 'block' : 'none';
+                if (el.tagName === 'DIV' && el.classList.contains('nav-section')) {
+                    el.style.display = (role === 'admin') ? 'block' : 'none';
+                }
+            });
+
+            // Special handling for nav-items
+            if (role !== 'admin') {
+                document.querySelectorAll('.nav-item[data-page="user-mgmt"], .nav-item[data-page="kb-mgmt"]').forEach(el => el.style.display = 'none');
+            }
+        }
+
+        async function exportLogsToCSV() {
+            const res = await fetch('/api/logs');
+            const logs = await res.json();
+            const csv = [
+                ['Date', 'Asset', 'Category', 'Description', 'Resolution', 'Operator'].join(','),
+                ...logs.map(l => [
+                    new Date(l.timestamp).toLocaleString(),
+                    l.asset_tag,
+                    l.issue_category,
+                    `"${(l.issue_description || '').replace(/"/g, '""')}"`,
+                    `"${(l.resolution_status || '').replace(/"/g, '""')}"`,
+                    l.operator
+                ].join(','))
+            ].join('\n');
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `CCAD_Support_Logs_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+        }
+
+        async function exportKB() {
+            const types = ['faq', 'troubleshooting', 'equipment'];
+            const data = {};
+            for (const t of types) {
+                const res = await fetch(`/api/kb?type=${t}&per_page=1000`);
+                data[t] = (await res.json()).data;
+            }
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `CCAD_Knowledge_Base_Backup.json`;
+            a.click();
+        }
+
+        async function importKB(input) {
+            if (!confirm('This will append to existing data. Continue?')) return;
+            const file = input.files[0];
+            const text = await file.text();
+            const data = JSON.parse(text);
+
+            // Logic to send to backend... (already exists in /api/backup)
+            const formData = new FormData();
+            formData.append('file', file);
+            await fetch('/api/backup', { method: 'POST', body: formData });
+            showToast('Knowledge Base Imported');
+        }
+
+        async function logActivity(type, action, details) {
+            // Optional: Send to analytics endpoint
+            console.log('Activity:', type, action);
+        }
+
+        function formatMarkdown(text) {
+            if (!text) return '';
+            return text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/\n/g, '<br>');
+        }
+    </script>
+
+    <script>
+        // ============================================
+        // APPLICATION STATE & LOGIC
+        // ============================================
+        const APP_STATE = {
+            currentPage: 'dashboard',
+            isLoggedIn: false,
+            faqs: [],
+            troubleshooting: [],
+            equipment: [],
+            pagination: {
+                faq: { current: 1, perPage: 10 },
+                ts: { current: 1, perPage: 10 },
+                logs: { current: 1, perPage: 15 }
+            }
+        };
+
+        // Redundant session removed (already defined at line 575)
+
+        // LOGIN
+        document.getElementById('loginBtn').addEventListener('click', handleLogin);
+
+        async function handleLogin() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            try {
+                const formData = new FormData();
+                formData.append('username', username);
+                formData.append('password', password);
+                const res = await fetch('/api/login', { method: 'POST', body: formData });
+                const data = await res.json();
+
+                if (data.success) {
+                    APP_STATE.isLoggedIn = true;
+                    SESSION.username = username;
+                    SESSION.role = data.role;
+                    document.getElementById('loginOverlay').style.display = 'none';
+                    document.getElementById('appContainer').style.display = 'flex';
+                    updateUIVisibility();
+                    initializeApplication();
+                } else {
+                    throw new Error(data.error || 'Invalid Credentials');
+                }
+            } catch (e) {
+                const err = document.getElementById('loginError');
+                err.textContent = 'Access Denied: ' + e.message;
+                err.style.display = 'block';
+            }
+        }
+
+        // LOGOUT
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await fetch('/logout');
+            window.location.reload();
+        });
+
+        // AUTH CHECK ON LOAD
+        // Optional: Check if session is already valid?
+        // We can try to fetch KB active; if 401, show login.
+
+        function navigateTo(page) {
+            APP_STATE.currentPage = page;
+            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+            const targetPage = document.getElementById(`page-${page}`);
+            if (targetPage) {
+                targetPage.style.display = 'block';
+                document.querySelector(`.nav-item[data-page="${page}"]`)?.classList.add('active');
+            }
+
+            if (page === 'faq') loadFAQs();
+            if (page === 'troubleshooting') loadTroubleshooting();
+            if (page === 'equipment') loadEquipment();
+            if (page === 'logs') loadLogs();
+            if (page === 'analytics') loadAnalytics();
+            if (page === 'escalation') renderEscalationTemplates();
+            if (page === 'user-mgmt') loadUsers();
+            if (page === 'kb-mgmt') { /* ready for export/import */ }
+        }
+
+        document.querySelectorAll('.nav-item').forEach(btn => {
+            btn.addEventListener('click', () => navigateTo(btn.dataset.page));
+        });
+
+        document.querySelectorAll('.quick-action-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const map = { 'faq': 'faq', 'ts': 'troubleshooting', 'escalate': 'escalation' };
+                navigateTo(map[btn.dataset.action] || 'dashboard');
+            });
+        });
+
+        async function initializeApplication() {
+            updateUIVisibility();
+            await loadDashboardData();
+            navigateTo('dashboard');
+        }
+
+        async function loadDashboardData() {
+            APP_STATE.faqs = await DB.getAll('faqs');
+            APP_STATE.troubleshooting = await DB.getAll('troubleshooting');
+
+            document.getElementById('statFaqCount').textContent = APP_STATE.faqs.length;
+            document.getElementById('statTsCount').textContent = APP_STATE.troubleshooting.length;
+
+            // Simple unique category count
+            const cats = new Set(APP_STATE.faqs.map(f => f.category));
+            document.getElementById('statCategories').textContent = cats.size;
+        }
+
+        // ======================
+        // FAQS
+        // ======================
+        async function loadFAQs() {
+            const list = document.getElementById('faqList');
+            if (!APP_STATE.faqs.length) APP_STATE.faqs = await DB.getAll('faqs');
+            renderFAQs(APP_STATE.faqs);
+        }
+
+        function renderFAQs(faqs) {
+            const list = document.getElementById('faqList');
+            if (!list) return;
+
+            const pageObj = APP_STATE.pagination.faq;
+            const start = (pageObj.current - 1) * pageObj.perPage;
+            const paginated = faqs.slice(start, start + pageObj.perPage);
+
+            list.innerHTML = paginated.map(f => `
+                <div class="faq-item" style="background:var(--bg-card); border:1px solid var(--border-soft); border-radius:10px; margin-bottom:12px; overflow:hidden;">
+                    <div class="faq-question" style="padding:15px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;" onclick="toggleFaq(this)">
+                        <div style="display:flex; gap:12px; align-items:center;">
+                            <span style="color:var(--hw-red); font-weight:bold; font-size:12px;">Q:</span>
+                            <span style="font-weight:600; font-size:14px; color:var(--text-primary);">${f.question}</span>
+                        </div>
+                        <span class="badge" style="background:var(--bg-tertiary); font-size:10px;">${f.category}</span>
+                    </div>
+                    <div class="faq-answer" style="max-height:0; overflow:hidden; transition:all 0.3s ease-out; background:var(--bg-tertiary); padding:0 20px;">
+                        <div style="padding:20px 0; font-size:13px; color:var(--text-secondary); line-height:1.6;">
+                            ${formatMarkdown(f.answer)}
+                            <div style="margin-top:15px; padding-top:15px; border-top:1px solid var(--border-soft); display:flex; justify-content:flex-end; gap:8px;" class="admin-only">
+                                <button class="btn btn-xs btn-secondary" onclick="editFaq('${f.id}')">Edit</button>
+                                <button class="btn btn-xs btn-danger" onclick="deleteFaq('${f.id}')">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            if (!document.getElementById('faqPager')) {
+                const pager = document.createElement('div');
+                pager.id = 'faqPager';
+                list.after(pager);
+            }
+            renderPagination(faqs.length, pageObj, 'faqPager', () => renderFAQs(faqs));
+        }
+
+        function toggleFaq(el) {
+            const item = el.parentElement;
+            const answer = el.nextElementSibling;
+            const isOpen = item.classList.toggle('open');
+            if (isOpen) {
+                answer.style.maxHeight = answer.scrollHeight + 100 + "px";
+                answer.style.padding = "0 20px";
+            } else {
+                answer.style.maxHeight = "0";
+                answer.style.padding = "0 20px"; // Keep padding consistent when closing
+            }
+        }
+
+        function renderPagination(total, pageObj, containerId, renderCallback) {
+            const totalPages = Math.ceil(total / pageObj.perPage);
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            if (totalPages <= 1) { container.innerHTML = ''; return; }
+
+            let html = `<div class="pagination-controls" style="display:flex; justify-content:center; gap:8px; margin-top:24px;">`;
+
+            // Prev
+            html += `<button class="btn btn-xs btn-secondary" ${pageObj.current === 1 ? 'disabled' : ''} onclick="changePage('${containerId}', ${pageObj.current - 1}, ${renderCallback})">←</button>`;
+
+            // Pages
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= pageObj.current - 1 && i <= pageObj.current + 1)) {
+                    html += `<button class="btn btn-xs ${i === pageObj.current ? 'btn-primary' : 'btn-secondary'}" onclick="changePage('${containerId}', ${i}, ${renderCallback})">${i}</button>`;
+                } else if (i === pageObj.current - 2 || i === pageObj.current + 2) {
+                    html += `<span style="color:var(--text-muted);">...</span>`;
+                }
+            }
+
+            // Next
+            html += `<button class="btn btn-xs btn-secondary" ${pageObj.current === totalPages ? 'disabled' : ''} onclick="changePage('${containerId}', ${pageObj.current + 1}, ${renderCallback})">→</button>`;
+
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        window.changePage = (type, page, callback) => {
+            const key = type === 'faqPager' ? 'faq' : (type === 'tsPager' ? 'ts' : 'logs');
+            APP_STATE.pagination[key].current = page;
+            callback();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // ======================
+        // OPERATIONS: LOGS & ANALYTICS
+        // ======================
+        async function submitCallLog() {
+            const payload = {
+                asset_tag: document.getElementById('logAsset').value,
+                category: document.getElementById('logCategory').value,
+                description: document.getElementById('logDesc').value,
+                status: document.getElementById('logResolution').value ? 'Resolved' : 'Pending',
+                root_cause: document.getElementById('logRootCause').value || 'Unknown',
+                operator: document.getElementById('logOperator').value || SESSION.username,
+                resolved_at: document.getElementById('logResolution').value ? new Date().toISOString() : null
+            };
+
+            const res = await fetch('/api/logs', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                showToast('Log Entry Saved');
+                document.getElementById('logAsset').value = '';
+                document.getElementById('logDesc').value = '';
+                document.getElementById('logResolution').value = '';
+                loadLogs();
+            }
+        }
+
+        async function loadLogs() {
+            try {
+                const res = await fetch('/api/logs');
+                if (!res.ok) return;
+                const logs = await res.json();
+                renderLogs(logs);
+            } catch (e) { }
+        }
+
+        function renderLogs(logs) {
+            const tbody = document.getElementById('logTableBody');
+            const list = document.getElementById('page-logs');
+            if (!tbody || !list) return;
+
+            const pageObj = APP_STATE.pagination.logs;
+            const start = (pageObj.current - 1) * pageObj.perPage;
+            const paginated = logs.slice(start, start + pageObj.perPage);
+
+            tbody.innerHTML = paginated.map(l => `
+                <tr style="border-bottom:1px solid var(--border-soft);">
+                    <td style="padding:10px;">${new Date(l.timestamp).toLocaleDateString()}</td>
+                    <td style="padding:10px; font-weight:600;"># ${l.asset_tag}</td>
+                    <td style="padding:10px;">${l.issue_category}</td>
+                    <td style="padding:10px;">${l.operator}</td>
+                    <td style="padding:10px;">
+                        <span class="badge" style="background:${l.resolution_status === 'Resolved' ? 'var(--status-low)' : 'var(--hw-red)'}; color:black;">
+                            ${l.resolution_status}
+                        </span>
+                    </td>
+                </tr>
+            `).join('') || '<tr><td colspan="5" style="text-align:center; padding:20px;">No logs found</td></tr>';
+
+            if (!document.getElementById('logsPager')) {
+                const pager = document.createElement('div');
+                pager.id = 'logsPager';
+                pager.style.padding = "0 20px 20px";
+                const tableCard = tbody.closest('.card');
+                if (tableCard) tableCard.appendChild(pager);
+            }
+            renderPagination(logs.length, pageObj, 'logsPager', () => renderLogs(logs));
+        }
+
+        async function loadAnalytics() {
+            const res = await fetch('/api/analytics');
+            const data = await res.json();
+
+            const catContainer = document.getElementById('chartCategories');
+            if (catContainer) {
+                catContainer.innerHTML = data.categories.map(c => `
+                    <div style="margin-bottom:15px;">
+                        <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
+                            <span>${c.issue_category}</span>
+                            <span style="font-weight:bold;">${c.count}</span>
+                        </div>
+                        <div style="height:10px; background:var(--bg-tertiary); border-radius:5px; overflow:hidden;">
+                            <div style="height:100%; width:${(c.count / data.total_calls * 100) || 0}%; background:var(--ccad-blue); transition:width 1s;"></div>
+                        </div>
+                    </div>
+                `).join('') || '<div class="text-muted">No data available</div>';
+            }
+
+            const assetContainer = document.getElementById('chartAssets');
+            if (assetContainer) {
+                assetContainer.innerHTML = data.top_assets.map(a => `
+                    <div style="display:flex; justify-content:space-between; padding:12px; border-bottom:1px solid var(--border-soft); font-size:13px; align-items:center;">
+                        <span style="color:var(--hw-red); font-weight:700; letter-spacing:0.5px;"># ${a.asset_tag}</span>
+                        <span class="badge badge-high" style="background:rgba(238,49,36,0.1); color:var(--hw-red); border:1px solid var(--hw-red);">${a.count} Reports</span>
+                    </div>
+                `).join('') || '<div class="text-muted">No asset data yet</div>';
+            }
+
+            // New: Operator Stats
+            const opContainer = document.createElement('div');
+            opContainer.innerHTML = `
+                <div class="card" style="margin-top:20px;">
+                    <div class="card-header"><div class="card-title">👨‍💻 Operator Performance</div></div>
+                    <div style="padding:15px;">
+                        ${data.top_operators.map(o => `
+                            <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:12px;">
+                                <span>${o.operator}</span>
+                                <span class="badge badge-category">${o.count} calls</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            const analyticsPage = document.getElementById('page-analytics');
+            if (analyticsPage && !document.getElementById('opStats')) {
+                const wrap = document.createElement('div');
+                wrap.id = 'opStats';
+                wrap.appendChild(opContainer);
+                analyticsPage.appendChild(wrap);
+            }
+        }
+
+        // ======================
+        // TROUBLESHOOTING
+        // ======================
+        async function loadTroubleshooting() {
+            if (!APP_STATE.troubleshooting.length) APP_STATE.troubleshooting = await DB.getAll('troubleshooting');
+            renderTroubleshooting(APP_STATE.troubleshooting);
+        }
+
+        function renderTroubleshooting(items) {
+            const list = document.getElementById('tsList');
+            if (!list) return;
+            if (!items.length) { list.innerHTML = '<div style="padding:20px; text-align:center;">No Guides Found</div>'; return; }
+
+            const pageObj = APP_STATE.pagination.ts;
+            const start = (pageObj.current - 1) * pageObj.perPage;
+            const paginated = items.slice(start, start + pageObj.perPage);
+
+            list.innerHTML = paginated.map(ts => `
+          <div class="ts-item" style="background:var(--bg-card); border:1px solid var(--border-soft); border-radius:10px; margin-bottom:15px; overflow:hidden;">
+            <div class="ts-card-header" style="padding:15px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;" onclick="toggleTs(this)">
+               <div>
+                  <h3 style="margin:0; font-size:16px;">${ts.title}</h3>
+                  <div style="margin-top:5px;">
+                     <span class="badge" style="background:var(--ccad-blue); color:white; padding:2px 8px; border-radius:4px; font-size:10px;">${ts.category}</span>
+                     <span class="badge" style="background:var(--status-${(ts.priority || 'Medium').toLowerCase()}); color:black; padding:2px 8px; border-radius:4px; font-size:10px;">${ts.priority}</span>
+                  </div>
+               </div>
+               <span class="toggle-icon">▼</span>
+            </div>
+            <div class="ts-card-body" style="padding:0 20px; background:var(--bg-tertiary); max-height:0; overflow:hidden; transition: max-height 0.3s ease-out;">
+               <div style="padding:20px 0;">
+                  <h4 style="color:var(--text-secondary); font-size:11px; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Symptoms</h4>
+                  <ul style="margin-bottom:20px; padding-left:20px; font-size:13px; color:var(--text-primary);">
+                    ${(ts.symptoms || []).map(s => `<li>${formatMarkdown(s)}</li>`).join('')}
+                  </ul>
+                  
+                  <h4 style="color:var(--text-secondary); font-size:11px; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Resolution Steps</h4>
+                  <div class="steps">
+                     ${(ts.tier1Steps || []).map(step => `
+                        <div style="display:flex; gap:15px; margin-bottom:15px; align-items:flex-start;">
+                           <div style="background:var(--hw-red); color:white; min-width:24px; height:24px; border-radius:50%; text-align:center; line-height:24px; font-size:12px; font-weight:bold;">${step.step}</div>
+                           <div style="flex:1;">
+                              <div style="font-weight:600; font-size:14px; margin-bottom:4px;">${formatMarkdown(step.action)}</div>
+                              <div style="color:var(--text-secondary); font-size:12px; font-style:italic;">Verification: ${formatMarkdown(step.verification) || 'None required'}</div>
+                           </div>
+                        </div>
+                     `).join('')}
+                  </div>
+                  
+                  <div style="margin-top:25px; pt:15px; border-top:1px solid var(--border-soft); display:flex; justify-content:flex-end; gap:10px;" class="admin-only">
+                      <button class="btn btn-xs btn-secondary" onclick="editTs('${ts.id}')">Edit Guide</button>
+                      <button class="btn btn-xs btn-danger" onclick="deleteTs('${ts.id}')">Delete</button>
+                  </div>
+               </div>
+            </div>
+          </div>
+        `).join('');
+
+            if (!document.getElementById('tsPager')) {
+                const pager = document.createElement('div');
+                pager.id = 'tsPager';
+                list.after(pager);
+            }
+            renderPagination(items.length, pageObj, 'tsPager', () => renderTroubleshooting(items));
+        }
+
+        function toggleTs(el) {
+            const body = el.nextElementSibling;
+            const icon = el.querySelector('.toggle-icon');
+            const isOpen = el.parentElement.classList.toggle('open');
+
+            if (isOpen) {
+                body.style.maxHeight = body.scrollHeight + 100 + "px";
+                icon.style.transform = "rotate(180deg)";
+            } else {
+                body.style.maxHeight = "0";
+                icon.style.transform = "rotate(0deg)";
+            }
+        }
+
+        // ======================
+        // MODALS & CRUD
+        // ======================
+        // Inject Modals (Simplified for brevity, matching original structure)
+        const modals = `
+    <div id="faqModal" class="modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); align-items:center; justify-content:center;">
+        <div class="modal" style="background:var(--bg-card); padding:20px; width:500px; border-radius:10px;">
+            <h3>Add/Edit FAQ</h3>
+            <input type="hidden" id="faqEditId">
+            <input class="form-input" id="faqQuestion" placeholder="Question" style="width:100%; margin-bottom:10px;">
+            <textarea class="form-input" id="faqAnswer" placeholder="Answer" rows="5" style="width:100%; margin-bottom:10px;"></textarea>
+            <select class="form-input" id="faqCategory" style="width:100%; margin-bottom:10px;">
+               <option>Login & Access</option>
+               <option>Maps & Location</option>
+               <option>Tags & Assets</option>
+               <option>Rule Triggering</option>
+               <option>MFA Issues</option>
+               <option>System Performance</option>
+               <option>Reporting</option>
+            </select>
+            <button class="btn btn-primary" id="saveFaqBtn">Save</button>
+            <button class="btn btn-secondary" onclick="document.getElementById('faqModal').style.display='none'">Cancel</button>
+        </div>
+    </div>
+    
+     <div id="tsModal" class="modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); align-items:center; justify-content:center; z-index: 10001;">
+        <div class="modal" style="background:var(--bg-card); padding:24px; width:750px; border-radius:12px; max-height:90vh; overflow-y:auto; border: 1px solid var(--border-medium);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h3 style="margin:0;">Add/Edit Troubleshooting Guide</h3>
+                <button class="btn btn-xs btn-secondary" onclick="document.getElementById('tsModal').style.display='none'">✕</button>
+            </div>
+            
+            <input type="hidden" id="tsEditId">
+            <div class="form-group"><label>Title</label><input class="form-input" id="tsTitle" placeholder="Guide Title"></div>
+            <div class="form-group"><label>Symptoms</label><textarea class="form-input" id="tsSymptoms" placeholder="Symptoms (one per line)" rows="3"></textarea></div>
+            
+            <div style="margin-bottom:20px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h4 style="margin:0; font-size:14px; color:var(--text-secondary);">Resolution Steps</h4>
+                    <button class="btn btn-xs btn-primary" onclick="addTsStepField()">+ Add Step</button>
+                </div>
+                <div id="tsStepsContainer"></div>
+            </div>
+
+            <div class="form-group"><label>Category</label>
+                <select class="form-input" id="tsCategory">
+                    <option>Hardware Failure</option>
+                    <option>Software Error</option>
+                    <option>Connectivity</option>
+                    <option>Calibration</option>
+                    <option>User Permission</option>
+                    <option>Sync Issues</option>
+                    <option>Access & Login</option>
+                    <option>Maps & Location</option>
+                </select>
+            </div>
+            
+            <div style="display:flex; gap:12px; margin-top:20px;">
+                <button class="btn btn-primary" style="flex:1;" id="saveTsBtn">Save Guide</button>
+                <button class="btn btn-secondary" style="flex:1;" onclick="document.getElementById('tsModal').style.display='none'">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div id="equipmentModal" class="modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); align-items:center; justify-content:center; z-index:10000;">
+        <div class="modal" style="background:var(--bg-card); padding:20px; width:500px; border-radius:10px;">
+            <h3>Add/Edit Equipment</h3>
+            <input type="hidden" id="eqEditId">
+            <input class="form-input" id="eqName" placeholder="Name" style="width:100%; margin-bottom:10px;">
+            <input class="form-input" id="eqType" placeholder="Type (e.g. Asset Tag, Gateway)" style="width:100%; margin-bottom:10px;">
+            <input class="form-input" id="eqModel" placeholder="Model" style="width:100%; margin-bottom:10px;">
+            <input class="form-input" id="eqManufacturer" placeholder="Manufacturer" style="width:100%; margin-bottom:10px;">
+            <input class="form-input" id="eqBattery" placeholder="Battery Life" style="width:100%; margin-bottom:10px;">
+            <textarea class="form-input" id="eqIssues" placeholder="Common Issues (one per line)" rows="3" style="width:100%; margin-bottom:10px;"></textarea>
+            <button class="btn btn-primary" id="saveEqBtn">Save</button>
+            <button class="btn btn-secondary" onclick="document.getElementById('equipmentModal').style.display='none'">Cancel</button>
+        </div>
+    </div>
+    `;
+        document.body.insertAdjacentHTML('beforeend', modals);
+
+        // FAQ Handlers
+        document.getElementById('addFaqBtn').addEventListener('click', () => {
+            document.getElementById('faqEditId').value = '';
+            document.getElementById('faqModal').style.display = 'flex';
+        });
+
+        document.getElementById('saveFaqBtn').addEventListener('click', async () => {
+            const id = document.getElementById('faqEditId').value;
+            const item = {
+                id: id || 'FAQ-' + Date.now(),
+                question: document.getElementById('faqQuestion').value,
+                answer: document.getElementById('faqAnswer').value,
+                category: document.getElementById('faqCategory').value
+            };
+
+            if (id) await DB.update('faqs', item);
+            else await DB.put('faqs', item);
+
+            document.getElementById('faqModal').style.display = 'none';
+            APP_STATE.faqs = []; // force reload
+            loadFAQs();
+        });
+
+        window.editFaq = (id) => {
+            const item = APP_STATE.faqs.find(f => f.id === id);
+            document.getElementById('faqEditId').value = item.id;
+            document.getElementById('faqQuestion').value = item.question;
+            document.getElementById('faqAnswer').value = item.answer;
+            document.getElementById('faqCategory').value = item.category;
+            document.getElementById('faqModal').style.display = 'flex';
+        }
+
+        window.deleteFaq = async (id) => {
+            if (confirm('Delete?')) {
+                await DB.delete('faqs', id);
+                APP_STATE.faqs = [];
+                loadFAQs();
+            }
+        }
+
+        // TS Handlers (Logic updated for dynamic steps)
+        function addTsStepField(stepData = { action: '', verification: '' }) {
+            const container = document.getElementById('tsStepsContainer');
+            const stepIndex = container.children.length + 1;
+            const div = document.createElement('div');
+            div.className = 'ts-step-field';
+            div.style = 'background:var(--bg-tertiary); padding:12px; border-radius:8px; margin-bottom:12px; border:1px solid var(--border-soft);';
+            div.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <span style="font-weight:600; font-size:12px; color:var(--hw-red);">Step ${stepIndex}</span>
+                    <button class="btn btn-xs btn-danger" onclick="this.parentElement.parentElement.remove(); reorderTsSteps();">Remove</button>
+                </div>
+                <input class="form-input ts-action" placeholder="Action (e.g. Verify power supply)" value="${stepData.action}" style="width:100%; margin-bottom:8px;">
+                <input class="form-input ts-verification" placeholder="Verification (e.g. Green LED is on)" value="${stepData.verification}" style="width:100%;">
+            `;
+            container.appendChild(div);
+        }
+
+        function reorderTsSteps() {
+            const container = document.getElementById('tsStepsContainer');
+            Array.from(container.children).forEach((div, i) => {
+                div.querySelector('span').textContent = `Step ${i + 1}`;
+            });
+        }
+
+        document.getElementById('addTsBtn').addEventListener('click', () => {
+            document.getElementById('tsEditId').value = '';
+            document.getElementById('tsTitle').value = '';
+            document.getElementById('tsSymptoms').value = '';
+            document.getElementById('tsStepsContainer').innerHTML = '';
+            addTsStepField(); // Start with one empty step
+            document.getElementById('tsModal').style.display = 'flex';
+        });
+
+        document.getElementById('saveTsBtn').addEventListener('click', async () => {
+            const id = document.getElementById('tsEditId').value;
+            const sym = document.getElementById('tsSymptoms').value.split('\n').filter(Boolean);
+
+            const stepFields = document.querySelectorAll('.ts-step-field');
+            const steps = Array.from(stepFields).map((field, i) => ({
+                step: i + 1,
+                action: field.querySelector('.ts-action').value,
+                verification: field.querySelector('.ts-verification').value
+            })).filter(s => s.action);
+
+            const item = {
+                id: id || 'TS-' + Date.now(),
+                title: document.getElementById('tsTitle').value,
+                category: document.getElementById('tsCategory').value,
+                priority: 'Medium',
+                symptoms: sym,
+                tier1Steps: steps
+            };
+
+            if (id) await DB.update('troubleshooting', item);
+            else await DB.put('troubleshooting', item);
+
+            document.getElementById('tsModal').style.display = 'none';
+            APP_STATE.troubleshooting = [];
+            loadTroubleshooting();
+        });
+
+        window.editTs = (id) => {
+            const item = APP_STATE.troubleshooting.find(t => t.id === id);
+            document.getElementById('tsEditId').value = item.id;
+            document.getElementById('tsTitle').value = item.title;
+            document.getElementById('tsSymptoms').value = (item.symptoms || []).join('\n');
+
+            const container = document.getElementById('tsStepsContainer');
+            container.innerHTML = '';
+            if (item.tier1Steps && item.tier1Steps.length) {
+                item.tier1Steps.forEach(s => addTsStepField(s));
+            } else {
+                addTsStepField();
+            }
+
+            document.getElementById('tsCategory').value = item.category;
+            document.getElementById('tsModal').style.display = 'flex';
+        }
+
+        window.deleteTs = async (id) => {
+            if (confirm('Delete?')) {
+                await DB.delete('troubleshooting', id);
+                APP_STATE.troubleshooting = [];
+                loadTroubleshooting();
+            }
+        }
+
+        // Filters & Search Logic
+        function applyFilters() {
+            const term = document.getElementById('globalSearch').value.toLowerCase();
+
+            const faqSearch = document.getElementById('faqSearch')?.value.toLowerCase() || '';
+            const faqCat = document.getElementById('faqCategoryFilter')?.value || 'all';
+            const faqSort = document.getElementById('faqSort')?.value || 'id-asc';
+
+            const tsSearch = document.getElementById('tsSearch')?.value.toLowerCase() || '';
+            const tsCat = document.getElementById('tsCategoryFilter')?.value || 'all';
+            const tsSort = document.getElementById('tsSort')?.value || 'id-asc';
+
+            if (APP_STATE.currentPage === 'faq') {
+                let filtered = APP_STATE.faqs.filter(f => {
+                    const matchesSearch = f.question.toLowerCase().includes(term) ||
+                        f.question.toLowerCase().includes(faqSearch) ||
+                        f.answer.toLowerCase().includes(term) ||
+                        f.answer.toLowerCase().includes(faqSearch);
+                    const matchesCat = faqCat === 'all' || f.category === faqCat;
+                    return matchesSearch && matchesCat;
+                });
+
+                // Sort
+                const [key, dir] = faqSort.split('-');
+                filtered.sort((a, b) => {
+                    let valA = (a[key] || '').toString().toLowerCase();
+                    let valB = (b[key] || '').toString().toLowerCase();
+                    if (dir === 'asc') return valA > valB ? 1 : -1;
+                    return valA < valB ? 1 : -1;
+                });
+
+                renderFAQs(filtered);
+            }
+
+            if (APP_STATE.currentPage === 'troubleshooting') {
+                let filtered = APP_STATE.troubleshooting.filter(t => {
+                    const searchStr = (term + ' ' + tsSearch).trim().toLowerCase();
+                    if (!searchStr) return tsCat === 'all' || t.category === tsCat;
+
+                    const titleMatch = t.title.toLowerCase().includes(searchStr);
+                    const catMatch = t.category.toLowerCase().includes(searchStr);
+                    const symptomMatch = t.symptoms && t.symptoms.some(s => s.toLowerCase().includes(searchStr));
+                    const stepMatch = t.tier1Steps && t.tier1Steps.some(s => s.action.toLowerCase().includes(searchStr));
+
+                    const matchesSearch = titleMatch || catMatch || symptomMatch || stepMatch;
+                    const matchesCat = tsCat === 'all' || t.category === tsCat;
+                    return matchesSearch && matchesCat;
+                });
+
+                // Sort
+                const [key, dir] = tsSort.split('-');
+                filtered.sort((a, b) => {
+                    if (key === 'priority') {
+                        const weights = { 'High': 3, 'Medium': 2, 'Low': 1 };
+                        let valA = weights[a.priority] || 0;
+                        let valB = weights[b.priority] || 0;
+                        return dir === 'asc' ? valA - valB : valB - valA;
+                    }
+                    let valA = (a[key] || '').toString().toLowerCase();
+                    let valB = (b[key] || '').toString().toLowerCase();
+                    if (dir === 'asc') return valA > valB ? 1 : -1;
+                    return valA < valB ? 1 : -1;
+                });
+
+                renderTroubleshooting(filtered);
+            }
+        }
+
+        // All Search/Filter Inputs
+        ['globalSearch', 'faqSearch', 'faqCategoryFilter', 'faqSort', 'tsSearch', 'tsCategoryFilter', 'tsSort'].forEach(id => {
+            document.getElementById(id)?.addEventListener('input', applyFilters);
+            document.getElementById(id)?.addEventListener('change', applyFilters);
+        });
+
+        // Theme Toggle
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const theme = btn.dataset.theme;
+                document.body.setAttribute('data-theme', theme);
+
+                // Update UI
+                document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Save preference
+                localStorage.setItem('ccad_theme', theme);
+            });
+        });
+
+        // Load theme preference
+        const savedTheme = localStorage.getItem('ccad_theme') || 'hw';
+        document.body.setAttribute('data-theme', savedTheme);
+        document.querySelector(`.theme-btn[data-theme="${savedTheme}"]`)?.click();
+
+
+        // ============================================
+        // STATIC DATA RE-INJECTION
+        // ============================================
+        const ESCALATION_TEMPLATES = {
+            'tag-failure': {
+                summary: 'Tag Hardware Failure - Replacement Required',
+                symptoms: 'Tag not reporting, battery depleted, physical damage observed',
+                actions: `1. Verified tag last communication timestamp (>60 mins)\n2. Confirmed tag shows star indicator\n3. Checked battery status - low/depleted\n4. Attempted to move tag - no position update\n5. Verified no coverage issues in area (other tags working)\n6. Checked if tag is under warranty`,
+                evidence: 'Screenshot of tag details showing status, battery level',
+                priority: 'High'
+            },
+            'backend-outage': {
+                summary: 'Backend Service Outage - Multiple Users Affected',
+                symptoms: 'Unable to access Activate, slow response times, error messages',
+                actions: `1. Verified user has valid credentials and MFA\n2. Confirmed Horizon connection working\n3. Checked if multiple users affected\n4. Verified specific server accessibility\n5. Documented error messages observed`,
+                evidence: 'Screenshots of errors, list of affected users, timestamps',
+                priority: 'High'
+            },
+            'cmms-sync': {
+                summary: 'CMMS Integration Sync Issue',
+                symptoms: 'Asset exists in CMMS but not in Activate, delayed sync',
+                actions: `1. Verified asset exists and is active in CMMS\n2. Checked asset creation timestamp (>4 hours ago)\n3. Confirmed asset is not showing in Activate search\n4. Verified no sync errors visible\n5. Checked if other recent assets are syncing`,
+                evidence: 'Asset ID/Name, CMMS screenshot, timestamps',
+                priority: 'Medium'
+            },
+            'map-alignment': {
+                summary: 'Map Alignment Issue - Assets Appearing in Wrong Locations',
+                symptoms: 'Tags not matching physical room locations, systematic shift observed',
+                actions: `1. Confirmed all affected assets show similar shift\n2. Verified Wi-Fi XY is enabled\n3. Captured screenshots of misalignment\n4. Noted direction and approximate distance of shift\n5. Identified specific floors/areas affected`,
+                evidence: 'Screenshots showing misalignment, facility/floor info',
+                priority: 'Medium'
+            },
+            'coverage-gap': {
+                summary: 'Wi-Fi Coverage Gap - Tags Not Reporting',
+                symptoms: 'Multiple tags offline in specific area, star indicators visible',
+                actions: `1. Identified affected area and list of tags\n2. Confirmed last seen timestamps (>60 mins)\n3. Verified other areas have working tags\n4. Checked for recent changes in area (equipment, construction)\n5. Tested tag movement to verify coverage issue`,
+                evidence: 'List of affected tags, area description, timestamps',
+                priority: 'High'
+            }
+        };
+
+        // Equipment Data (Dynamic now)
+        // const EQUIPMENT_DATA = [];
+
+        // ============================================
+        // LOGIC RESTORATION
+        // ============================================
+
+        // Render Escalation Templates
+        function renderEscalationTemplates() {
+            const container = document.getElementById('escalationTemplatesList');
+            if (!container) return;
+            container.innerHTML = Object.keys(ESCALATION_TEMPLATES).map(key => {
+                const t = ESCALATION_TEMPLATES[key];
+                return `<div class="template-card" data-template="${key}" onclick="fillEscalation('${key}')" 
+            style="background:var(--bg-tertiary); padding:15px; border-radius:8px; border:1px solid var(--border-soft); margin-bottom:10px; cursor:pointer; transition:all 0.2s;">
+               <div style="font-weight:600; color:var(--text-primary); margin-bottom:4px;">${t.summary.split('-')[0]}</div>
+               <div style="font-size:11px; color:var(--text-muted);">${t.summary.split('-')[1] || ''}</div>
+            </div>`;
+            }).join('');
+        }
+
+        window.fillEscalation = (key) => {
+            const t = ESCALATION_TEMPLATES[key];
+            document.getElementById('escSummary').value = t.summary;
+            document.getElementById('escSymptoms').value = t.symptoms;
+            document.getElementById('escActions').value = t.actions;
+            document.getElementById('escPriority').value = t.priority;
+
+            // Visual feedback
+            document.querySelectorAll('.template-card').forEach(c => c.style.borderColor = 'var(--border-soft)');
+            document.querySelector(`.template-card[data-template="${key}"]`).style.borderColor = 'var(--hw-red)';
+        };
+
+        // Render Equipment
+        async function loadEquipment() {
+            const res = await fetch('/api/equipment');
+            const data = await res.json();
+            APP_STATE.equipment = data.data;
+            renderEquipment(APP_STATE.equipment);
+        }
+
+        function renderEquipment(items) {
+            const list = document.getElementById('equipmentList');
+            if (!items.length) { list.innerHTML = '<div style="padding:20px; text-align:center;">No Equipment Found</div>'; return; }
+
+            const isAdmin = SESSION.role === 'admin';
+
+            list.innerHTML = items.map(eq => `
+            <div class="equipment-card" style="background:var(--bg-card); padding:20px; border-radius:10px; border:1px solid var(--border-soft); margin-bottom:15px;">
+               <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+                  <h3 style="margin:0; font-size:16px;">${eq.name}</h3>
+                  <div>
+                    <span class="badge" style="background:var(--ccad-blue); color:white; padding:2px 8px; border-radius:4px; font-size:11px;">${eq.type}</span>
+                    ${isAdmin ? `
+                        <button class="btn btn-xs btn-secondary" onclick="editEquipment('${eq.id}')">Edit</button>
+                        <button class="btn btn-xs btn-danger" onclick="deleteEquipment('${eq.id}')">Delete</button>
+                    ` : ''}
+                  </div>
+               </div>
+               <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:13px;">
+                  <div><span style="color:var(--text-muted);">Model:</span> ${eq.model}</div>
+                  <div><span style="color:var(--text-muted);">Battery:</span> ${eq.battery_life || 'N/A'}</div>
+               </div>
+               ${eq.common_issues ? `
+               <div style="margin-top:10px; font-size:12px;">
+                 <span style="color:var(--text-muted);">Common Issues:</span>
+                 <ul style="margin: 5px 0 0 20px; color:var(--text-secondary);">
+                    ${Array.isArray(eq.common_issues) ? eq.common_issues.map(i => `<li>${i}</li>`).join('') : `<li>${eq.common_issues}</li>`}
+                 </ul>
+               </div>` : ''}
+            </div>
+        `).join('');
+        }
+
+        async function deleteEquipment(id) {
+            if (confirm('Delete this equipment?')) {
+                await fetch(`/api/equipment?id=${id}`, { method: 'DELETE' });
+                loadEquipment();
+            }
+        }
+
+        // --- User Mgmt ---
+        async function loadUsers() {
+            const res = await fetch('/api/users');
+            const users = await res.json();
+            const list = document.getElementById('userList');
+            list.innerHTML = `
+                <table style="width:100%; border-collapse:collapse;">
+                    <thead><tr style="text-align:left; border-bottom:2px solid var(--border-soft);">
+                        <th style="padding:10px;">Username</th><th style="padding:10px;">Role</th><th style="padding:10px;">Actions</th>
+                    </tr></thead>
+                    <tbody>${users.map(u => `
+                        <tr style="border-bottom:1px solid var(--border-soft);">
+                            <td style="padding:10px;">${u.username}</td>
+                            <td style="padding:10px;"><span class="badge" style="background:var(--bg-tertiary);">${u.role}</span></td>
+                            <td style="padding:10px;">
+                                <button class="btn btn-xs btn-secondary" onclick="alert('Password reset (Mock)')">Reset</button>
+                            </td>
+                        </tr>
+                    `).join('')}</tbody>
+                </table>
+            `;
+        }
+
+        // Expand/Collapse All
+        document.getElementById('expandAllFaqs')?.addEventListener('click', () => {
+            document.querySelectorAll('.faq-answer').forEach(el => el.style.display = 'block');
+        });
+        document.getElementById('collapseAllFaqs')?.addEventListener('click', () => {
+            document.querySelectorAll('.faq-answer').forEach(el => el.style.display = 'none');
+        });
+
+        // Equipment Handlers
+        window.openEquipmentModal = () => {
+            document.getElementById('eqEditId').value = '';
+            document.getElementById('eqName').value = '';
+            document.getElementById('eqType').value = '';
+            document.getElementById('eqModel').value = '';
+            document.getElementById('eqManufacturer').value = '';
+            document.getElementById('eqBattery').value = '';
+            document.getElementById('eqIssues').value = '';
+            document.getElementById('equipmentModal').style.display = 'flex';
+        };
+
+        document.getElementById('saveEqBtn')?.addEventListener('click', async () => {
+            const id = document.getElementById('eqEditId').value || 'EQ-' + Date.now();
+            const data = {
+                id: id,
+                name: document.getElementById('eqName').value,
+                type: document.getElementById('eqType').value,
+                model: document.getElementById('eqModel').value,
+                manufacturer: document.getElementById('eqManufacturer').value,
+                battery_life: document.getElementById('eqBattery').value,
+                common_issues: document.getElementById('eqIssues').value.split('\n').filter(Boolean)
+            };
+
+            const method = document.getElementById('eqEditId').value ? 'PUT' : 'POST';
+            await fetch('/api/equipment', {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            document.getElementById('equipmentModal').style.display = 'none';
+            loadEquipment();
+        });
+
+        window.editEquipment = (id) => {
+            const eq = APP_STATE.equipment.find(e => e.id === id);
+            document.getElementById('eqEditId').value = eq.id;
+            document.getElementById('eqName').value = eq.name;
+            document.getElementById('eqType').value = eq.type;
+            document.getElementById('eqModel').value = eq.model;
+            document.getElementById('eqManufacturer').value = eq.manufacturer;
+            document.getElementById('eqBattery').value = eq.battery_life || '';
+            document.getElementById('eqIssues').value = Array.isArray(eq.common_issues) ? eq.common_issues.join('\n') : (eq.common_issues || '');
+            document.getElementById('equipmentModal').style.display = 'flex';
+        };
+
+        // Restore Tier-1 vs Tier-2 Nav
+        // (Already handled in HTML replacement step below)
+
+        // BOOTSTRAP APPLICATION
+        document.addEventListener('DOMContentLoaded', () => {
+            if (SESSION.username && SESSION.username !== 'Guest') {
+                APP_STATE.isLoggedIn = true;
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('appContainer').style.display = 'flex';
+                initializeApplication();
+            }
+        });
+    </script>
+</body>
+
+</html>

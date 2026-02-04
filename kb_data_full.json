@@ -1,0 +1,2424 @@
+[
+  {
+    "id": "KB-AUTO-001",
+    "type": "FAQ",
+    "category": "Activation \u26a1",
+    "question": "How to activate IT-712E-H Mini Asset Tag?",
+    "answer": "1. Locate the activation splash point on the front of the tag.\n2. Hold the tag activation device within 2 inches.\n3. Press and hold the button for 3-5 seconds until the LED blinks."
+  },
+  {
+    "id": "KB-AUTO-002",
+    "type": "FAQ",
+    "category": "Access \ud83d\udd11",
+    "question": "How to access the RTLS Dashboard remotely?",
+    "answer": "1. Launch the Horizon Client.\n2. Connect to the CCAD VDI gateway.\n3. Log in with your standard CCAD username and password.\n4. Complete the Multi-Factor Authentication (MFA) challenge."
+  },
+  {
+    "id": "KB-AUTO-003",
+    "type": "Troubleshooting",
+    "category": "System \ud83d\udcbb",
+    "question": "Report email is receiving a blank report",
+    "answer": "1. Go to Reports > Configuration.\n2. Uncheck the 'Send Title Only' option if selected.\n3. Verify the 'Send if Empty' setting (if you expect data, ensure filters are correct).\n4. Check the 'Time Range' of the report; if no data exists for that range, the report may appear blank.\n5. If the issue persists, check the 'CenTrak Reporting Service' on the server."
+  },
+  {
+    "id": "KB-AUTO-004",
+    "type": "Troubleshooting",
+    "category": "Permissions \ud83d\udee1\ufe0f",
+    "question": "Scheduling option not visible to end user",
+    "answer": "1. This assumes the user is logged in with restricted permissions (Tier 1).\n2. Log in as Administrator to verify if the option exists globally.\n3. If visible to Admin but not User: Go to User Management > Roles.\n4. Enable 'Manage Schedules' permission for the user's role.\n5. Refresh the user session."
+  },
+  {
+    "id": "KB-AUTO-005",
+    "type": "FAQ",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "question": "What is the battery life of the IT-712E-H tag?",
+    "answer": "1. The expected battery life is approximately 3-5 years under normal usage rates.\n2. Low battery warnings will appear in the dashboard when voltage drops below 2.8V."
+  },
+  {
+    "id": "TS-ORIG-001",
+    "type": "Troubleshooting",
+    "category": "Diagnostics \ud83d\udd27",
+    "question": "Infusion Pump: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate."
+  },
+  {
+    "id": "TS-ORIG-002",
+    "type": "Troubleshooting",
+    "category": "Diagnostics \ud83d\udd27",
+    "question": "Infusion Pump: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s."
+  },
+  {
+    "id": "TS-ORIG-006",
+    "type": "Troubleshooting",
+    "category": "Diagnostics \ud83d\udd27",
+    "question": "Infusion Pump: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data."
+  },
+  {
+    "id": "TS-0001",
+    "question": "Infusion Pump: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0002",
+    "question": "Infusion Pump: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0003",
+    "question": "Infusion Pump: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0004",
+    "question": "Infusion Pump: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0005",
+    "question": "Infusion Pump: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0006",
+    "question": "Infusion Pump: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0007",
+    "question": "Infusion Pump: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0008",
+    "question": "Bladder Scanner: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0009",
+    "question": "Bladder Scanner: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0010",
+    "question": "Bladder Scanner: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0011",
+    "question": "Bladder Scanner: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0012",
+    "question": "Bladder Scanner: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0013",
+    "question": "Bladder Scanner: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0014",
+    "question": "Bladder Scanner: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0015",
+    "question": "Wheelchair: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0016",
+    "question": "Wheelchair: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0017",
+    "question": "Wheelchair: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0018",
+    "question": "Wheelchair: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0019",
+    "question": "Wheelchair: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0020",
+    "question": "Wheelchair: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0021",
+    "question": "Wheelchair: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0022",
+    "question": "Stretcher: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0023",
+    "question": "Stretcher: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0024",
+    "question": "Stretcher: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0025",
+    "question": "Stretcher: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0026",
+    "question": "Stretcher: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0027",
+    "question": "Stretcher: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0028",
+    "question": "Stretcher: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0029",
+    "question": "Telemetry Transmitter: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0030",
+    "question": "Telemetry Transmitter: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0031",
+    "question": "Telemetry Transmitter: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0032",
+    "question": "Telemetry Transmitter: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0033",
+    "question": "Telemetry Transmitter: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0034",
+    "question": "Telemetry Transmitter: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0035",
+    "question": "Telemetry Transmitter: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0036",
+    "question": "Ultrasound Machine: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0037",
+    "question": "Ultrasound Machine: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0038",
+    "question": "Ultrasound Machine: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0039",
+    "question": "Ultrasound Machine: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0040",
+    "question": "Ultrasound Machine: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0041",
+    "question": "Ultrasound Machine: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0042",
+    "question": "Ultrasound Machine: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0043",
+    "question": "Portable X-Ray: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0044",
+    "question": "Portable X-Ray: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0045",
+    "question": "Portable X-Ray: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0046",
+    "question": "Portable X-Ray: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0047",
+    "question": "Portable X-Ray: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0048",
+    "question": "Portable X-Ray: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0049",
+    "question": "Portable X-Ray: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0050",
+    "question": "Defibrillator: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0051",
+    "question": "Defibrillator: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0052",
+    "question": "Defibrillator: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0053",
+    "question": "Defibrillator: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0054",
+    "question": "Defibrillator: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0055",
+    "question": "Defibrillator: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0056",
+    "question": "Defibrillator: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0057",
+    "question": "EKG Machine: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0058",
+    "question": "EKG Machine: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0059",
+    "question": "EKG Machine: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0060",
+    "question": "EKG Machine: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0061",
+    "question": "EKG Machine: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0062",
+    "question": "EKG Machine: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0063",
+    "question": "EKG Machine: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0064",
+    "question": "Ventilator: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0065",
+    "question": "Ventilator: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0066",
+    "question": "Ventilator: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0067",
+    "question": "Ventilator: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0068",
+    "question": "Ventilator: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0069",
+    "question": "Ventilator: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0070",
+    "question": "Ventilator: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0071",
+    "question": "BiPAP Machine: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0072",
+    "question": "BiPAP Machine: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0073",
+    "question": "BiPAP Machine: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0074",
+    "question": "BiPAP Machine: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0075",
+    "question": "BiPAP Machine: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0076",
+    "question": "BiPAP Machine: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0077",
+    "question": "BiPAP Machine: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0078",
+    "question": "CPAP Machine: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0079",
+    "question": "CPAP Machine: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0080",
+    "question": "CPAP Machine: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0081",
+    "question": "CPAP Machine: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0082",
+    "question": "CPAP Machine: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0083",
+    "question": "CPAP Machine: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0084",
+    "question": "CPAP Machine: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0085",
+    "question": "Feeding Pump: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0086",
+    "question": "Feeding Pump: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0087",
+    "question": "Feeding Pump: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0088",
+    "question": "Feeding Pump: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0089",
+    "question": "Feeding Pump: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0090",
+    "question": "Feeding Pump: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0091",
+    "question": "Feeding Pump: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0092",
+    "question": "Pulse Oximeter: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0093",
+    "question": "Pulse Oximeter: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0094",
+    "question": "Pulse Oximeter: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0095",
+    "question": "Pulse Oximeter: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0096",
+    "question": "Pulse Oximeter: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0097",
+    "question": "Pulse Oximeter: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0098",
+    "question": "Pulse Oximeter: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0099",
+    "question": "Vital Signs Monitor: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0100",
+    "question": "Vital Signs Monitor: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0101",
+    "question": "Vital Signs Monitor: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0102",
+    "question": "Vital Signs Monitor: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0103",
+    "question": "Vital Signs Monitor: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0104",
+    "question": "Vital Signs Monitor: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0105",
+    "question": "Vital Signs Monitor: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0106",
+    "question": "Fetal Monitor: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0107",
+    "question": "Fetal Monitor: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0108",
+    "question": "Fetal Monitor: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0109",
+    "question": "Fetal Monitor: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0110",
+    "question": "Fetal Monitor: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0111",
+    "question": "Fetal Monitor: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0112",
+    "question": "Fetal Monitor: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0113",
+    "question": "Incubator: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0114",
+    "question": "Incubator: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0115",
+    "question": "Incubator: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0116",
+    "question": "Incubator: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0117",
+    "question": "Incubator: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0118",
+    "question": "Incubator: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0119",
+    "question": "Incubator: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0120",
+    "question": "Warmer: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0121",
+    "question": "Warmer: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0122",
+    "question": "Warmer: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0123",
+    "question": "Warmer: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0124",
+    "question": "Warmer: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0125",
+    "question": "Warmer: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0126",
+    "question": "Warmer: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0127",
+    "question": "Phototherapy Unit: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0128",
+    "question": "Phototherapy Unit: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0129",
+    "question": "Phototherapy Unit: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0130",
+    "question": "Phototherapy Unit: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0131",
+    "question": "Phototherapy Unit: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0132",
+    "question": "Phototherapy Unit: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0133",
+    "question": "Phototherapy Unit: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0134",
+    "question": "Dialysis Machine: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0135",
+    "question": "Dialysis Machine: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0136",
+    "question": "Dialysis Machine: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0137",
+    "question": "Dialysis Machine: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0138",
+    "question": "Dialysis Machine: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0139",
+    "question": "Dialysis Machine: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0140",
+    "question": "Dialysis Machine: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0141",
+    "question": "Endoscopy Cart: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0142",
+    "question": "Endoscopy Cart: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0143",
+    "question": "Endoscopy Cart: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0144",
+    "question": "Endoscopy Cart: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0145",
+    "question": "Endoscopy Cart: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0146",
+    "question": "Endoscopy Cart: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0147",
+    "question": "Endoscopy Cart: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0148",
+    "question": "Crash Cart: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0149",
+    "question": "Crash Cart: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0150",
+    "question": "Crash Cart: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0151",
+    "question": "Crash Cart: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0152",
+    "question": "Crash Cart: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0153",
+    "question": "Crash Cart: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0154",
+    "question": "Crash Cart: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0155",
+    "question": "Medication Cart: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0156",
+    "question": "Medication Cart: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0157",
+    "question": "Medication Cart: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0158",
+    "question": "Medication Cart: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0159",
+    "question": "Medication Cart: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0160",
+    "question": "Medication Cart: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0161",
+    "question": "Medication Cart: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0162",
+    "question": "Anesthesia Machine: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0163",
+    "question": "Anesthesia Machine: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0164",
+    "question": "Anesthesia Machine: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0165",
+    "question": "Anesthesia Machine: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0166",
+    "question": "Anesthesia Machine: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0167",
+    "question": "Anesthesia Machine: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0168",
+    "question": "Anesthesia Machine: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0169",
+    "question": "Surgical Table: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0170",
+    "question": "Surgical Table: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0171",
+    "question": "Surgical Table: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0172",
+    "question": "Surgical Table: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0173",
+    "question": "Surgical Table: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0174",
+    "question": "Surgical Table: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0175",
+    "question": "Surgical Table: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0176",
+    "question": "Exam Light: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0177",
+    "question": "Exam Light: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0178",
+    "question": "Exam Light: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0179",
+    "question": "Exam Light: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0180",
+    "question": "Exam Light: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0181",
+    "question": "Exam Light: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0182",
+    "question": "Exam Light: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0183",
+    "question": "Dyson Fan: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0184",
+    "question": "Dyson Fan: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0185",
+    "question": "Dyson Fan: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0186",
+    "question": "Dyson Fan: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0187",
+    "question": "Dyson Fan: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0188",
+    "question": "Dyson Fan: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0189",
+    "question": "Dyson Fan: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0190",
+    "question": "Computer on Wheels (COW): Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0191",
+    "question": "Computer on Wheels (COW): Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0192",
+    "question": "Computer on Wheels (COW): Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0193",
+    "question": "Computer on Wheels (COW): Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0194",
+    "question": "Computer on Wheels (COW): Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0195",
+    "question": "Computer on Wheels (COW): Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0196",
+    "question": "Computer on Wheels (COW): Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0197",
+    "question": "Tablet Cart: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0198",
+    "question": "Tablet Cart: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0199",
+    "question": "Tablet Cart: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0200",
+    "question": "Tablet Cart: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0201",
+    "question": "Tablet Cart: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0202",
+    "question": "Tablet Cart: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0203",
+    "question": "Tablet Cart: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0204",
+    "question": "Intubation Cart: Not showing on map",
+    "answer": "1. Check tag attachment.\n2. Hold tag 30s to activate.\n3. Check 'Local Streaming' service.\n4. Escalate if present in Core but not Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0205",
+    "question": "Intubation Cart: Showing in wrong room",
+    "answer": "1. Verify physical location.\n2. Go to Systems > Map Sync.\n3. Select floor map.\n4. Click 'Perform Sync'.\n5. Wait 15s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0206",
+    "question": "Intubation Cart: Low Battery warning",
+    "answer": "1. Locate asset.\n2. Remove tag.\n3. Replace CR2450 Battery.\n4. Check status in Activate.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0207",
+    "question": "Intubation Cart: Adhesive peeling off",
+    "answer": "1. Remove tag.\n2. Clean asset with 50/50 Alcohol.\n3. Apply NEW adhesive.\n4. Press 30s.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0208",
+    "question": "Intubation Cart: Tag physically damaged",
+    "answer": "1. Edit Asset in Activate.\n2. Select 'Remove Tag'.\n3. Provision NEW tag.\n4. Dispose of old tag.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0209",
+    "question": "Intubation Cart: Report email not received",
+    "answer": "1. Check Spam folder.\n2. Verify SMTP settings in System Config.\n3. Ensure Report Schedule is 'Active'.\n4. Check if 'Send if Empty' is unchecked and report yielded no data.",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "TS-0210",
+    "question": "Intubation Cart: Report contains empty data",
+    "answer": "1. Verify assets exist in the filtered Group/Dept.\n2. Check if tags have reported in the selected time window.\n3. Extend time range (e.g., 'Last 7 Days').",
+    "category": "Diagnostics \ud83d\udd27",
+    "type": "Troubleshooting"
+  },
+  {
+    "id": "FAQ-0211",
+    "question": "How to clean tag on Infusion Pump?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0212",
+    "question": "Where to place tag on Infusion Pump?",
+    "answer": "1. Identify mounting location: Pole clamp or rear casing (upper).\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0213",
+    "question": "Naming convention for Infusion Pump?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Infusion Pump, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0214",
+    "question": "How to archive Infusion Pump?",
+    "answer": "1. Search for Infusion Pump in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0215",
+    "question": "How to clean tag on Bladder Scanner?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0216",
+    "question": "Where to place tag on Bladder Scanner?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0217",
+    "question": "Naming convention for Bladder Scanner?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Bladder Scanner, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0218",
+    "question": "How to archive Bladder Scanner?",
+    "answer": "1. Search for Bladder Scanner in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0219",
+    "question": "How to clean tag on Wheelchair?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0220",
+    "question": "Where to place tag on Wheelchair?",
+    "answer": "1. Identify mounting location: Rear plastic backing or under seat frame.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0221",
+    "question": "Naming convention for Wheelchair?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Wheelchair, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0222",
+    "question": "How to archive Wheelchair?",
+    "answer": "1. Search for Wheelchair in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0223",
+    "question": "How to clean tag on Stretcher?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0224",
+    "question": "Where to place tag on Stretcher?",
+    "answer": "1. Identify mounting location: Undercarriage frame, visible to ceiling.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0225",
+    "question": "Naming convention for Stretcher?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Stretcher, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0226",
+    "question": "How to archive Stretcher?",
+    "answer": "1. Search for Stretcher in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0227",
+    "question": "How to clean tag on Telemetry Transmitter?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0228",
+    "question": "Where to place tag on Telemetry Transmitter?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0229",
+    "question": "Naming convention for Telemetry Transmitter?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Telemetry Transmitter, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0230",
+    "question": "How to archive Telemetry Transmitter?",
+    "answer": "1. Search for Telemetry Transmitter in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0231",
+    "question": "How to clean tag on Ultrasound Machine?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0232",
+    "question": "Where to place tag on Ultrasound Machine?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0233",
+    "question": "Naming convention for Ultrasound Machine?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Ultrasound Machine, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0234",
+    "question": "How to archive Ultrasound Machine?",
+    "answer": "1. Search for Ultrasound Machine in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0235",
+    "question": "How to clean tag on Portable X-Ray?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0236",
+    "question": "Where to place tag on Portable X-Ray?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0237",
+    "question": "Naming convention for Portable X-Ray?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Portable X-Ray, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0238",
+    "question": "How to archive Portable X-Ray?",
+    "answer": "1. Search for Portable X-Ray in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0239",
+    "question": "How to clean tag on Defibrillator?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0240",
+    "question": "Where to place tag on Defibrillator?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0241",
+    "question": "Naming convention for Defibrillator?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Defibrillator, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0242",
+    "question": "How to archive Defibrillator?",
+    "answer": "1. Search for Defibrillator in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0243",
+    "question": "How to clean tag on EKG Machine?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0244",
+    "question": "Where to place tag on EKG Machine?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0245",
+    "question": "Naming convention for EKG Machine?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'EKG Machine, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0246",
+    "question": "How to archive EKG Machine?",
+    "answer": "1. Search for EKG Machine in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0247",
+    "question": "How to clean tag on Ventilator?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0248",
+    "question": "Where to place tag on Ventilator?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0249",
+    "question": "Naming convention for Ventilator?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Ventilator, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0250",
+    "question": "How to archive Ventilator?",
+    "answer": "1. Search for Ventilator in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0251",
+    "question": "How to clean tag on BiPAP Machine?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0252",
+    "question": "Where to place tag on BiPAP Machine?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0253",
+    "question": "Naming convention for BiPAP Machine?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'BiPAP Machine, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0254",
+    "question": "How to archive BiPAP Machine?",
+    "answer": "1. Search for BiPAP Machine in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0255",
+    "question": "How to clean tag on CPAP Machine?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0256",
+    "question": "Where to place tag on CPAP Machine?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0257",
+    "question": "Naming convention for CPAP Machine?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'CPAP Machine, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0258",
+    "question": "How to archive CPAP Machine?",
+    "answer": "1. Search for CPAP Machine in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0259",
+    "question": "How to clean tag on Feeding Pump?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0260",
+    "question": "Where to place tag on Feeding Pump?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0261",
+    "question": "Naming convention for Feeding Pump?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Feeding Pump, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0262",
+    "question": "How to archive Feeding Pump?",
+    "answer": "1. Search for Feeding Pump in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0263",
+    "question": "How to clean tag on Pulse Oximeter?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0264",
+    "question": "Where to place tag on Pulse Oximeter?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0265",
+    "question": "Naming convention for Pulse Oximeter?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Pulse Oximeter, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0266",
+    "question": "How to archive Pulse Oximeter?",
+    "answer": "1. Search for Pulse Oximeter in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0267",
+    "question": "How to clean tag on Vital Signs Monitor?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0268",
+    "question": "Where to place tag on Vital Signs Monitor?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0269",
+    "question": "Naming convention for Vital Signs Monitor?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Vital Signs Monitor, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0270",
+    "question": "How to archive Vital Signs Monitor?",
+    "answer": "1. Search for Vital Signs Monitor in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0271",
+    "question": "How to clean tag on Fetal Monitor?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0272",
+    "question": "Where to place tag on Fetal Monitor?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0273",
+    "question": "Naming convention for Fetal Monitor?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Fetal Monitor, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0274",
+    "question": "How to archive Fetal Monitor?",
+    "answer": "1. Search for Fetal Monitor in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0275",
+    "question": "How to clean tag on Incubator?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0276",
+    "question": "Where to place tag on Incubator?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0277",
+    "question": "Naming convention for Incubator?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Incubator, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0278",
+    "question": "How to archive Incubator?",
+    "answer": "1. Search for Incubator in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0279",
+    "question": "How to clean tag on Warmer?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0280",
+    "question": "Where to place tag on Warmer?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0281",
+    "question": "Naming convention for Warmer?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Warmer, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0282",
+    "question": "How to archive Warmer?",
+    "answer": "1. Search for Warmer in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0283",
+    "question": "How to clean tag on Phototherapy Unit?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0284",
+    "question": "Where to place tag on Phototherapy Unit?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0285",
+    "question": "Naming convention for Phototherapy Unit?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Phototherapy Unit, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0286",
+    "question": "How to archive Phototherapy Unit?",
+    "answer": "1. Search for Phototherapy Unit in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0287",
+    "question": "How to clean tag on Dialysis Machine?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0288",
+    "question": "Where to place tag on Dialysis Machine?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0289",
+    "question": "Naming convention for Dialysis Machine?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Dialysis Machine, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0290",
+    "question": "How to archive Dialysis Machine?",
+    "answer": "1. Search for Dialysis Machine in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0291",
+    "question": "How to clean tag on Endoscopy Cart?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0292",
+    "question": "Where to place tag on Endoscopy Cart?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0293",
+    "question": "Naming convention for Endoscopy Cart?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Endoscopy Cart, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0294",
+    "question": "How to archive Endoscopy Cart?",
+    "answer": "1. Search for Endoscopy Cart in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0295",
+    "question": "How to clean tag on Crash Cart?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0296",
+    "question": "Where to place tag on Crash Cart?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0297",
+    "question": "Naming convention for Crash Cart?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Crash Cart, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0298",
+    "question": "How to archive Crash Cart?",
+    "answer": "1. Search for Crash Cart in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0299",
+    "question": "How to clean tag on Medication Cart?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0300",
+    "question": "Where to place tag on Medication Cart?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0301",
+    "question": "Naming convention for Medication Cart?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Medication Cart, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0302",
+    "question": "How to archive Medication Cart?",
+    "answer": "1. Search for Medication Cart in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0303",
+    "question": "How to clean tag on Anesthesia Machine?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0304",
+    "question": "Where to place tag on Anesthesia Machine?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0305",
+    "question": "Naming convention for Anesthesia Machine?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Anesthesia Machine, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0306",
+    "question": "How to archive Anesthesia Machine?",
+    "answer": "1. Search for Anesthesia Machine in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0307",
+    "question": "How to clean tag on Surgical Table?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0308",
+    "question": "Where to place tag on Surgical Table?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0309",
+    "question": "Naming convention for Surgical Table?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Surgical Table, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0310",
+    "question": "How to archive Surgical Table?",
+    "answer": "1. Search for Surgical Table in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0311",
+    "question": "How to clean tag on Exam Light?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0312",
+    "question": "Where to place tag on Exam Light?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0313",
+    "question": "Naming convention for Exam Light?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Exam Light, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0314",
+    "question": "How to archive Exam Light?",
+    "answer": "1. Search for Exam Light in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0315",
+    "question": "How to clean tag on Dyson Fan?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0316",
+    "question": "Where to place tag on Dyson Fan?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0317",
+    "question": "Naming convention for Dyson Fan?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Dyson Fan, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0318",
+    "question": "How to archive Dyson Fan?",
+    "answer": "1. Search for Dyson Fan in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0319",
+    "question": "How to clean tag on Computer on Wheels (COW)?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0320",
+    "question": "Where to place tag on Computer on Wheels (COW)?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0321",
+    "question": "Naming convention for Computer on Wheels (COW)?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Computer on Wheels (COW), Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0322",
+    "question": "How to archive Computer on Wheels (COW)?",
+    "answer": "1. Search for Computer on Wheels (COW) in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0323",
+    "question": "How to clean tag on Tablet Cart?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0324",
+    "question": "Where to place tag on Tablet Cart?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0325",
+    "question": "Naming convention for Tablet Cart?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Tablet Cart, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0326",
+    "question": "How to archive Tablet Cart?",
+    "answer": "1. Search for Tablet Cart in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0327",
+    "question": "How to clean tag on Intubation Cart?",
+    "answer": "1. Wear gloves.\n2. Use PDI Super Sani-Cloth.\n3. Wipe tag surface thoroughly.\n4. Allow to air dry.\n5. CAUTION: Do NOT use Acetone or Betadine.",
+    "category": "Maintenance \ud83e\uddf9",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0328",
+    "question": "Where to place tag on Intubation Cart?",
+    "answer": "1. Identify mounting location: Upper part of asset, moderate visibility to ceiling, metal-free area.\n2. Ensure surface is flat and smooth.\n3. Avoid interfering with asset operation (buttons/screens).",
+    "category": "Tagging \ud83c\udff7\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0329",
+    "question": "Naming convention for Intubation Cart?",
+    "answer": "1. Standard Format: Type, Subtype_Barcode.\n2. Example: 'Intubation Cart, Standard_12345'.\n3. Do NOT use commas in the Type name.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0330",
+    "question": "How to archive Intubation Cart?",
+    "answer": "1. Search for Intubation Cart in Asset List.\n2. Click 'More' > 'Archive'.\n3. Confirm action.\n4. Tag is now dissociated.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0331",
+    "question": "How to schedule a report",
+    "answer": "1. Reports > Edit.\n2. Check 'Active'.\n3. Set Schedule (Daily/Weekly).\n4. Choose Format (PDF/CSV).",
+    "category": "Reports \ud83d\udcca",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0332",
+    "question": "Export asset list",
+    "answer": "1. Asset List View.\n2. View Actions > Export Data.\n3. Download or check email (>1000 rows).",
+    "category": "Reports \ud83d\udcca",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0333",
+    "question": "Map Sync Procedure",
+    "answer": "1. Activate > Systems > Map Sync.\n2. Select Map.\n3. 'Perform Sync'.\n4. Aligns x,y coordinates with DNA Spaces.",
+    "category": "System \u2699\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0334",
+    "question": "Tag Timeout Settings",
+    "answer": "1. Map Timeout: 60 min (Tag removed if not seen).\n2. Monitor Timeout: 240 min (Tag removed if no monitor IR seen).",
+    "category": "System \u2699\ufe0f",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0335",
+    "question": "Restore Asset",
+    "answer": "1. Filter 'Archived' list.\n2. 'More' > 'Restore'.\n3. Edit Asset to assign NEW tag.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0336",
+    "question": "Check Core Services",
+    "answer": "1. RDP to Server 051.\n2. Check 'CenTrak' services (GMS, Location, Streaming).\n3. All must be Running/Green.",
+    "category": "Critical \ud83d\udea8",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0337",
+    "question": "Cisco DNA Access",
+    "answer": "1. T1 PROHIBITED from Cisco DNA Spaces.\n2. All map changes flow FROM Cisco TO Activate.\n3. No manual map edits.",
+    "category": "Guardrails \u26d4",
+    "type": "FAQ"
+  },
+  {
+    "id": "FAQ-0338",
+    "question": "Import Data CSV",
+    "answer": "1. Admin > System Config > Data Import.\n2. Use Template.\n3. Upload CSV.\n4. Click 'Test Import' to validate.",
+    "category": "Admin \ud83d\udcdd",
+    "type": "FAQ"
+  }
+]

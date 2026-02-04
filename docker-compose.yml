@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: ccad-online-dashboard
+    ports:
+      - "5101:5101"
+    volumes:
+      - ./instance:/app/instance
+      - ./uploads:/app/uploads
+    restart: always
+    environment:
+      - FLASK_ENV=production
