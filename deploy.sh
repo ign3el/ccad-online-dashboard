@@ -5,7 +5,7 @@
 PROJECT_NAME="ccad-online-dashboard"
 PROJECT_PATH="/www/wwwroot/CCAD Online Dashboard"
 LOG_FILE="$PROJECT_PATH/deploy.log"
-BRANCH="master"
+BRANCH="main"
 # =================================================
 
 # 1. SETUP LOGGING
@@ -36,12 +36,14 @@ else
     exit 1
 fi
 
+# Ensure www user owns files before pull
+chown -R www:www "$PROJECT_PATH"
+
 # 3. PULL CODE
 if [ -d ".git" ]; then
     echo "📥 Pulling latest code from GitHub ($BRANCH)..."
-    # Using 'git reset --hard' to ensure the VPS exactly matches GitHub
-    git fetch origin $BRANCH
-    git reset --hard origin/$BRANCH
+    sudo -u www git fetch origin $BRANCH
+    sudo -u www git reset --hard origin/$BRANCH
     echo "✔ Code synced successfully."
 else
     echo "⚠ No .git folder found. Skipping pull."
@@ -54,7 +56,7 @@ echo "🐳 Docker Build Started (Port 5101)..."
 /usr/bin/docker compose down --remove-orphans
 
 # Build and start new ones
-/usr/bin/docker compose up -d --build
+/usr/bin/docker compose up -d --build --remove-orphans
 
 # Check status
 if [ $? -eq 0 ]; then
@@ -68,13 +70,24 @@ fi
 echo "🧹 Cleaning up and fixing media/database permissions..."
 /usr/bin/docker image prune -f
 
-# Ensure common folders are writable for the app
-# CCAD uses 'instance' for DB and 'uploads' for files
+# IMPORTANT: Ensure the backend can write to these folders after Docker starts
 chown -R www:www "$PROJECT_PATH/instance"
 chown -R www:www "$PROJECT_PATH/uploads"
-chmod -R 775 "$PROJECT_PATH/instance" "$PROJECT_PATH/uploads"
+chmod -R 777 "$PROJECT_PATH/instance" "$PROJECT_PATH/uploads"
 
 echo "============================================================"
-echo "✅ DEPLOYMENT FINISHED - Accessible at port 5101"
+echo "✅ DEPLOYMENT FINISHED"
+echo "============================================================"
+echo " "
+echo "🔧 Finalizing permissions..."
+echo " "
+
+# Redundant sudo check to match edusmart script style
+sudo chmod -R 777 "$PROJECT_PATH/instance"
+sudo chmod -R 777 "$PROJECT_PATH/uploads"
+echo "Deployment complete and permissions updated!"
+
+echo "============================================================"
+echo "✅ PERMISSIONS FIXED"
 echo "============================================================"
 echo " "

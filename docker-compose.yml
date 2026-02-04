@@ -9,6 +9,8 @@ services:
     volumes:
       - ./instance:/app/instance
       - ./uploads:/app/uploads
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
     restart: always
     environment:
       - FLASK_ENV=production
