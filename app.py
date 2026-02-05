@@ -234,6 +234,16 @@ def api_kb():
         conn.close()
         return jsonify({'success': True})
 
+def preprocess_query(query):
+    # Remove special FTS5 characters and split into keywords
+    keywords = [k for k in query.replace('"', ' ').replace('*', ' ').replace('(', ' ').replace(')', ' ').split() if len(k) > 1]
+    # Filter stopwords (basic set)
+    stopwords = {'how', 'to', 'create', 'a', 'with', 'all', 'the', 'is', 'of', 'and', 'for', 'in'}
+    filtered = [k for k in keywords if k.lower() not in stopwords]
+    if not filtered: return query
+    # Join with OR for maximum coverage
+    return " OR ".join(filtered)
+
 # --- API: WIKI SEARCH (FTS5) ---
 @app.route('/api/wiki/search', methods=['GET'])
 def api_wiki_search():
@@ -242,13 +252,26 @@ def api_wiki_search():
     if not query: return jsonify({'data': [], 'total': 0})
     
     conn = get_db_connection()
-    # Rank by BM25
-    results = conn.execute('''
-        SELECT kb_id, content, category, source, title, bm25(wiki_fts) as rank
-        FROM wiki_fts 
-        WHERE wiki_fts MATCH ? 
-        ORDER BY rank 
-        LIMIT 20''', (query,)).fetchall()
+    
+    # Pre-process for better matching
+    smart_query = preprocess_query(query)
+    
+    # FTS5 search
+    try:
+        results = conn.execute('''
+            SELECT kb_id, content, category, source, title, bm25(wiki_fts) as rank
+            FROM wiki_fts 
+            WHERE wiki_fts MATCH ? 
+            ORDER BY rank 
+            LIMIT 20''', (smart_query,)).fetchall()
+    except Exception as e:
+        # Fallback if FTS5 syntax fails
+        results = conn.execute('''
+            SELECT kb_id, content, category, source, title, -1.0 as rank
+            FROM wiki_fts 
+            WHERE content LIKE ? 
+            LIMIT 20''', (f'%{query}%',)).fetchall()
+    
     conn.close()
     
     return jsonify({

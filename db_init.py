@@ -55,6 +55,13 @@ def seed_db():
         print(f"Could not find {JSON_PATH}")
     finally:
         conn.close()
+    
+    # Run Automated Sync (Hash-based)
+    try:
+        import sync_manager
+        sync_manager.auto_sync()
+    except Exception as e:
+        print(f"Auto-sync failed: {e}")
 
 if __name__ == "__main__":
     seed_db()

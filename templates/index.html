@@ -173,10 +173,10 @@
                             </div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-icon">📁</div>
+                            <div class="stat-icon">🧠</div>
                             <div class="stat-content">
-                                <h3 id="statCategories">0</h3>
-                                <p>Categories</p>
+                                <h3 id="statWikiCount">0</h3>
+                                <p>Living Wiki Entries</p>
                             </div>
                         </div>
                         <div class="stat-card">
@@ -1070,16 +1070,19 @@
             APP_STATE.faqs = await DB.getAll('faqs');
             APP_STATE.troubleshooting = await DB.getAll('troubleshooting');
 
+            // Fetch Wiki count separately to avoid loading 1600+ items into memory
+            const wikiRes = await fetch('/api/kb?type=wiki&per_page=1');
+            const wikiData = await wikiRes.json();
+            const wikiCount = wikiData.total || 0;
+
             document.getElementById('statFaqCount').textContent = APP_STATE.faqs.length;
             document.getElementById('statTsCount').textContent = APP_STATE.troubleshooting.length;
+            document.getElementById('statWikiCount').textContent = wikiCount;
 
             // Update Quick Action Descriptors
             document.getElementById('descFaq').textContent = `Total: ${APP_STATE.faqs.length} Entries`;
             document.getElementById('descTs').textContent = `Total: ${APP_STATE.troubleshooting.length} Guides`;
-
-            // Simple unique category count
-            const cats = new Set(APP_STATE.faqs.map(f => f.category));
-            document.getElementById('statCategories').textContent = cats.size;
+            document.getElementById('descWiki').textContent = `Total: ${wikiCount} Knowledge Shreds`;
         }
 
         async function updateActivityFeed() {
