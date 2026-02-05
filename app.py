@@ -60,10 +60,20 @@ def init_db():
                  type TEXT,
                  model TEXT,
                  manufacturer TEXT,
-                 battery_life TEXT,
-                 common_issues TEXT,
                  details TEXT
                  )''')
+
+    # FTS5 Virtual Table for Search
+    try:
+        c.execute('''CREATE VIRTUAL TABLE IF NOT EXISTS wiki_fts USING fts5(
+                        kb_id UNINDEXED, 
+                        content, 
+                        category, 
+                        source, 
+                        title,
+                        tokenize = 'porter unicode61'
+                    )''')
+    except Exception: pass
     
     # Default users
     c.execute("INSERT OR IGNORE INTO users (username, password, role) VALUES ('admin', 'CCAD2026', 'admin')")
@@ -71,6 +81,20 @@ def init_db():
     
     conn.commit()
     return conn
+
+# --- HELPERS ---
+
+def update_wiki_index(kb_id, content, category, source, title):
+    conn = get_db_connection()
+    try:
+        conn.execute('DELETE FROM wiki_fts WHERE kb_id = ?', (kb_id,))
+        conn.execute('INSERT INTO wiki_fts (kb_id, content, category, source, title) VALUES (?, ?, ?, ?, ?)',
+                     (kb_id, content, category, source, title))
+        conn.commit()
+    except Exception as e:
+        print(f"Bsearch Error Syncing: {e}")
+    finally:
+        conn.close()
 
 # --- ROUTES ---
 
@@ -187,6 +211,7 @@ def api_kb():
             conn.execute('INSERT INTO knowledge_base (id, type, category, question, answer) VALUES (?, ?, ?, ?, ?)',
                          (data['id'], data['type'], data['category'], data['question'], data['answer']))
             conn.commit()
+            update_wiki_index(data['id'], data['answer'], data['category'], data['type'], data['question'])
             conn.close()
             return jsonify({'success': True})
         except Exception as e:
@@ -197,15 +222,70 @@ def api_kb():
         conn.execute('UPDATE knowledge_base SET type=?, category=?, question=?, answer=? WHERE id=?',
                      (data['type'], data['category'], data['question'], data['answer'], data['id']))
         conn.commit()
+        update_wiki_index(data['id'], data['answer'], data['category'], data['type'], data['question'])
         conn.close()
         return jsonify({'success': True})
 
     if request.method == 'DELETE':
         id = request.args.get('id')
         conn.execute('DELETE FROM knowledge_base WHERE id = ?', (id,))
+        conn.execute('DELETE FROM wiki_fts WHERE kb_id = ?', (id,))
         conn.commit()
         conn.close()
         return jsonify({'success': True})
+
+# --- API: WIKI SEARCH (FTS5) ---
+@app.route('/api/wiki/search', methods=['GET'])
+def api_wiki_search():
+    if not session.get('logged_in'): return jsonify({'error': 'Unauthorized'}), 401
+    query = request.args.get('q', '')
+    if not query: return jsonify({'data': [], 'total': 0})
+    
+    conn = get_db_connection()
+    # Rank by BM25
+    results = conn.execute('''
+        SELECT kb_id, content, category, source, title, bm25(wiki_fts) as rank
+        FROM wiki_fts 
+        WHERE wiki_fts MATCH ? 
+        ORDER BY rank 
+        LIMIT 20''', (query,)).fetchall()
+    conn.close()
+    
+    return jsonify({
+        'data': [dict(ix) for ix in results],
+        'total': len(results)
+    })
+
+@app.route('/api/wiki/analyze', methods=['POST'])
+def api_wiki_analyze():
+    if session.get('role') != 'admin': return jsonify({'error': 'Access Denied'}), 403
+    data = request.json
+    log_id = data.get('id')
+    desc = data.get('description', '')
+    
+    # Simple Synthesis Mock for demo (to be replaced with actual AI logic)
+    # 1. Search FTS for keywords in description
+    conn = get_db_connection()
+    words = desc.split()[:3] # Use first 3 words for search
+    search_q = " OR ".join(words)
+    results = conn.execute('SELECT title, content, source FROM wiki_fts WHERE wiki_fts MATCH ? LIMIT 3', (search_q,)).fetchall()
+    conn.close()
+    
+    analysis = {
+        'verified_fix': "No direct guide found, check general hardware SOP.",
+        'mentor_tip': "Logs show no recent similar cases. Trust the manual.",
+        'source': "General Knowledge"
+    }
+    
+    if results:
+        best = results[0]
+        analysis = {
+            'verified_fix': f"Based on '{best['title']}', focus on verifying {best['content'][:100]}...",
+            'mentor_tip': "Experienced T1 staff recommend checking physical connections first.",
+            'source': best['source']
+        }
+        
+    return jsonify(analysis)
 
 @app.route('/api/backup', methods=['GET', 'POST'])
 def api_backup():
@@ -250,21 +330,46 @@ def api_backup():
             return jsonify({'error': str(e)}), 500
 
 # --- API: LOGS ---
-@app.route('/api/logs', methods=['GET', 'POST'])
+@app.route('/api/logs', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def api_logs():
     if not session.get('logged_in'): return jsonify({'error': 'Unauthorized'}), 401
     
     conn = get_db_connection()
+    
     if request.method == 'GET':
         logs = conn.execute('SELECT * FROM support_logs ORDER BY timestamp DESC').fetchall()
         conn.close()
         return jsonify([dict(ix) for ix in logs])
 
-    data = request.json
-    conn.execute('INSERT INTO support_logs (timestamp, operator, asset_tag, issue_category, issue_description, resolution_status, root_cause) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                 (datetime.now(), data.get('operator', session.get('username')), data['asset_tag'], data['category'], data['description'], data['status'], data.get('root_cause', 'Unknown')))
+    if request.method == 'POST':
+        data = request.json
+        conn.execute('INSERT INTO support_logs (timestamp, operator, asset_tag, issue_category, issue_description, resolution_status, root_cause) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                     (datetime.now(), data.get('operator', session.get('username')), data['asset_tag'], data['category'], data['description'], data['status'], data.get('root_cause', 'Unknown')))
+        conn.commit()
+        conn.close()
+        return jsonify({'success': True})
 
-    conn.commit()
+    if session.get('role') != 'admin':
+        return jsonify({'error': 'Admin only'}), 403
+
+    if request.method == 'PUT':
+        data = request.json
+        conn.execute('''UPDATE support_logs SET 
+                        operator=?, asset_tag=?, issue_category=?, 
+                        issue_description=?, resolution_status=?, root_cause=?,
+                        resolved_at=? 
+                        WHERE id=?''',
+                     (data['operator'], data['asset_tag'], data['category'], 
+                      data['description'], data['status'], data.get('root_cause', 'Unknown'),
+                      datetime.now() if data['status'] == 'Resolved' else None,
+                      data['id']))
+        conn.commit()
+    
+    if request.method == 'DELETE':
+        log_id = request.args.get('id')
+        conn.execute('DELETE FROM support_logs WHERE id = ?', (log_id,))
+        conn.commit()
+
     conn.close()
     return jsonify({'success': True})
 
@@ -281,7 +386,7 @@ def api_analytics():
     cats = conn.execute('SELECT issue_category, COUNT(*) as count FROM support_logs GROUP BY issue_category ORDER BY count DESC').fetchall()
     categories = [{'issue_category': r[0], 'count': r[1]} for r in cats]
     
-    # 3. Asset Issues
+    # 3. Asset Issues (Problematic Tags)
     assets = conn.execute("SELECT asset_tag, COUNT(*) as count FROM support_logs WHERE asset_tag IS NOT NULL AND asset_tag != '' GROUP BY asset_tag ORDER BY count DESC LIMIT 5").fetchall()
     top_assets = [{'asset_tag': r[0], 'count': r[1]} for r in assets]
 
@@ -289,12 +394,41 @@ def api_analytics():
     operators = conn.execute('SELECT operator, COUNT(*) as count FROM support_logs GROUP BY operator ORDER BY count DESC').fetchall()
     top_operators = [{'operator': r[0], 'count': r[1]} for r in operators]
 
+    # 5. SLA: Avg Resolution Time (Minutes)
+    sla_res = conn.execute('''SELECT AVG(JULIANDAY(resolved_at) - JULIANDAY(timestamp)) * 24 * 60 
+                            FROM support_logs WHERE resolved_at IS NOT NULL''').fetchone()[0]
+    avg_sla = round(sla_res, 1) if sla_res else 0
+
+    # 6. Status Breakdown
+    statuses = conn.execute('SELECT resolution_status, COUNT(*) as count FROM support_logs GROUP BY resolution_status').fetchall()
+    status_breakdown = [{'status': r[0], 'count': r[1]} for r in statuses]
+
+    # 7. Repetitive Issues (Category + Asset)
+    repetitive = conn.execute('''SELECT asset_tag, issue_category, COUNT(*) as count 
+                                FROM support_logs 
+                                WHERE asset_tag IS NOT NULL AND asset_tag != ''
+                                GROUP BY asset_tag, issue_category 
+                                HAVING count > 1 
+                                ORDER BY count DESC LIMIT 5''').fetchall()
+    repetitive_issues = [{'asset_tag': r[0], 'category': r[1], 'count': r[2]} for r in repetitive]
+
+    # 8. Daily Trend (Last 7 Days)
+    trend = conn.execute('''SELECT DATE(timestamp) as day, COUNT(*) as count 
+                           FROM support_logs 
+                           GROUP BY day 
+                           ORDER BY day DESC LIMIT 7''').fetchall()
+    daily_trend = [{'day': r[0], 'count': r[1]} for r in trend][::-1]
+
     conn.close()
     return jsonify({
         'total_calls': total,
         'categories': categories,
         'top_assets': top_assets,
-        'top_operators': top_operators
+        'top_operators': top_operators,
+        'avg_sla': avg_sla,
+        'status_breakdown': status_breakdown,
+        'repetitive_issues': repetitive_issues,
+        'daily_trend': daily_trend
     })
 
 # --- API: EQUIPMENT ---
@@ -305,10 +439,7 @@ def api_equipment():
     
     if request.method == 'GET':
         items = conn.execute('SELECT * FROM equipment').fetchall()
-        result = []
-        for row in items:
-            r = dict(row)
-            result.append(r)
+        result = [dict(row) for row in items]
         conn.close()
         return jsonify({'data': result})
 
@@ -317,36 +448,77 @@ def api_equipment():
 
     if request.method == 'POST':
         data = request.json
-        conn.execute('INSERT INTO equipment (id, name, type, model, manufacturer, battery_life, common_issues, details) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                     (data['id'], data['name'], data['type'], data['model'], data['manufacturer'], data.get('battery_life'), json.dumps(data.get('common_issues', [])), json.dumps(data)))
+        conn.execute('INSERT INTO equipment (id, name, type, model, manufacturer, details) VALUES (?, ?, ?, ?, ?, ?)',
+                     (data['id'], data['name'], data['type'], data['model'], data['manufacturer'], json.dumps(data)))
         conn.commit()
+        # Update Wiki Index
+        title = f"{data['name']} ({data['model']})"
+        content = f"Model: {data['model']} | Manufacturer: {data['manufacturer']} | Details: {json.dumps(data)}"
+        update_wiki_index(data['id'], content, data['type'], 'equipment', title)
     
     if request.method == 'PUT':
         data = request.json
-        conn.execute('UPDATE equipment SET name=?, type=?, model=?, manufacturer=?, battery_life=?, common_issues=?, details=? WHERE id=?',
-                     (data['name'], data['type'], data['model'], data['manufacturer'], data.get('battery_life'), json.dumps(data.get('common_issues', [])), json.dumps(data), data['id']))
+        conn.execute('UPDATE equipment SET name=?, type=?, model=?, manufacturer=?, details=? WHERE id=?',
+                     (data['name'], data['type'], data['model'], data['manufacturer'], json.dumps(data), data['id']))
         conn.commit()
+        # Update Wiki Index
+        title = f"{data['name']} ({data['model']})"
+        content = f"Model: {data['model']} | Manufacturer: {data['manufacturer']} | Details: {json.dumps(data)}"
+        update_wiki_index(data['id'], content, data['type'], 'equipment', title)
 
     if request.method == 'DELETE':
         id = request.args.get('id')
         conn.execute('DELETE FROM equipment WHERE id = ?', (id,))
+        conn.execute('DELETE FROM wiki_fts WHERE kb_id = ?', (id,))
         conn.commit()
 
     conn.close()
     return jsonify({'success': True})
-
-# --- API: USERS (Admin Only) ---
-@app.route('/api/users', methods=['GET', 'POST', 'DELETE'])
+@app.route('/api/users', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def api_users():
     if session.get('role') != 'admin': return jsonify({'error': 'Unauthorized'}), 403
     conn = get_db_connection()
+    
     if request.method == 'GET':
         users = conn.execute('SELECT id, username, role FROM users').fetchall()
         conn.close()
         return jsonify([dict(ix) for ix in users])
-    # ... POST/DELETE for user management ...
-    conn.close()
-    return jsonify({'success': True})
+    
+    data = request.json
+    
+    if request.method == 'POST':
+        try:
+            conn.execute('INSERT INTO users (username, password, role) VALUES (?, ?, ?)',
+                         (data['username'], data['password'], data['role']))
+            conn.commit()
+            conn.close()
+            return jsonify({'success': True})
+        except sqlite3.IntegrityError:
+            return jsonify({'error': 'Username already exists'}), 400
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
+
+    if request.method == 'PUT':
+        # Used for password reset or role change
+        if 'password' in data:
+            conn.execute('UPDATE users SET password=? WHERE id=?', (data['password'], data['id']))
+        if 'role' in data:
+            conn.execute('UPDATE users SET role=? WHERE id=?', (data['role'], data['id']))
+        conn.commit()
+        conn.close()
+        return jsonify({'success': True})
+
+    if request.method == 'DELETE':
+        user_id = request.args.get('id')
+        # Prevent self-deletion
+        current_user = conn.execute('SELECT id FROM users WHERE username = ?', (session.get('username'),)).fetchone()
+        if current_user and str(current_user['id']) == str(user_id):
+            return jsonify({'error': 'Cannot delete your own account'}), 400
+            
+        conn.execute('DELETE FROM users WHERE id = ?', (user_id,))
+        conn.commit()
+        conn.close()
+        return jsonify({'success': True})
 
 # --- API: AUTO-KB (UPLOAD) ---
 @app.route('/api/upload', methods=['POST'])
@@ -402,4 +574,4 @@ def api_upload():
 
 if __name__ == '__main__':
     init_db()
-    app.run(host='0.0.0.0', port=5101, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

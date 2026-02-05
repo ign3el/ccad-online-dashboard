@@ -425,17 +425,20 @@ a:hover {
 
 /* Header */
 .header {
-  height: var(--header-height);
+  height: auto;
+  min-height: var(--header-height);
   background: linear-gradient(90deg, var(--bg-card), var(--bg-secondary));
   border-bottom: 1px solid var(--border-soft);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 8px 24px;
   position: sticky;
   top: 0;
   z-index: 50;
   transition: background var(--transition-smooth), border-color var(--transition-smooth);
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .header-left {
@@ -616,6 +619,100 @@ a:hover {
   font-weight: 700;
   color: var(--hw-red);
   text-shadow: var(--shadow-glow-red);
+}
+
+/* Quick Actions Extra Details */
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.quick-action-btn {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  text-align: left;
+  width: 100%;
+}
+
+.quick-action-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--hw-red);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow-red);
+}
+
+.quick-action-btn .icon {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.quick-action-btn .btn-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.quick-action-btn .btn-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Activity Feed */
+.activity-item {
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.03);
+  margin-bottom: 8px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  transition: all var(--transition-fast);
+  border-left: 2px solid transparent;
+}
+
+.activity-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.activity-item.log {
+  border-left-color: var(--ccad-blue);
+}
+
+.activity-item.faq {
+  border-left-color: var(--hw-red);
+}
+
+.activity-item.sys {
+  border-left-color: var(--status-medium);
+}
+
+.activity-icon {
+  font-size: 16px;
+  padding-top: 2px;
+}
+
+.activity-info {
+  flex: 1;
+}
+
+.activity-text {
+  font-size: 13px;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.activity-time {
+  font-size: 11px;
+  color: var(--text-muted);
 }
 
 .stat-content p {
