@@ -279,36 +279,141 @@ def api_wiki_search():
         'total': len(results)
     })
 
+import requests
+
+def call_groq_ai(prompt, system_prompt="You are a CCAD RTLS Tier 1 Support Assistant."):
+    api_key = os.getenv('GROQ_API_KEY', '').strip()
+    if not api_key:
+        return {"error": "GROQ_API_KEY not set in environment."}
+    
+    url = "https://api.groq.com/openai/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "model": "llama-3.1-8b-instant",
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": prompt}
+        ],
+        "temperature": 0.2,
+        "max_tokens": 1024
+    }
+    
+    try:
+        # Hardened timeout for stability
+        res = requests.post(url, json=payload, headers=headers, timeout=20)
+        if res.status_code != 200:
+            print(f"Groq API Error ({res.status_code}): {res.text}")
+        res.raise_for_status()
+        return res.json()['choices'][0]['message']['content']
+    except Exception as e:
+        print(f"API Exception: {str(e)}")
+        return f"AI Error: {str(e)}"
+
 @app.route('/api/wiki/analyze', methods=['POST'])
 def api_wiki_analyze():
-    if session.get('role') != 'admin': return jsonify({'error': 'Access Denied'}), 403
+    if not session.get('logged_in'): return jsonify({'error': 'Unauthorized'}), 401
     data = request.json
     log_id = data.get('id')
     desc = data.get('description', '')
     
-    # Simple Synthesis Mock for demo (to be replaced with actual AI logic)
-    # 1. Search FTS for keywords in description
+    # RAG: 1. Search Knowledge Base for context
     conn = get_db_connection()
-    words = desc.split()[:3] # Use first 3 words for search
-    search_q = " OR ".join(words)
-    results = conn.execute('SELECT title, content, source FROM wiki_fts WHERE wiki_fts MATCH ? LIMIT 3', (search_q,)).fetchall()
+    # Use smart pre-processing for better matches
+    smart_q = preprocess_query(desc)
+    
+    results = conn.execute('''
+        SELECT title, content, source 
+        FROM wiki_fts 
+        WHERE wiki_fts MATCH ? 
+        LIMIT 5''', (smart_q,)).fetchall()
     conn.close()
     
-    analysis = {
-        'verified_fix': "No direct guide found, check general hardware SOP.",
-        'mentor_tip': "Logs show no recent similar cases. Trust the manual.",
-        'source': "General Knowledge"
-    }
+    context = "\n".join([f"Source: {r['source']} | Title: {r['title']}\nContent: {r['content']}" for r in results])
     
-    if results:
-        best = results[0]
-        analysis = {
-            'verified_fix': f"Based on '{best['title']}', focus on verifying {best['content'][:100]}...",
-            'mentor_tip': "Experienced T1 staff recommend checking physical connections first.",
-            'source': best['source']
-        }
+    prompt = f"""
+USER ISSUE LOG:
+{desc}
+
+RELEVANT KNOWLEDGE BASE CONTEXT:
+{context if context else 'No direct matching guides found in the library.'}
+
+TASK:
+Analyze the issue using the provided context. 
+If a solution is found in the context, describe it clearly for a Tier 1 engineer.
+If no context matches, provide a best-effort diagnostic starting with hardware checks (power/attachment).
+
+RESPONSE FORMAT (JSON-like):
+Provide your answer in two sections:
+1. VERIFIED_FIX: The technical solution.
+2. MENTOR_TIP: A short, practical tip for the field engineer.
+"""
+    
+    try:
+        ai_response = call_groq_ai(prompt)
         
-    return jsonify(analysis)
+        # Parse AI response (basic extraction if LLM doesn't return strict JSON)
+        fix = "Consult documentation."
+        tip = "Escalate to T2 if unsure."
+        
+        if isinstance(ai_response, str) and "VERIFIED_FIX:" in ai_response:
+            parts = ai_response.split("MENTOR_TIP:")
+            fix = parts[0].replace("VERIFIED_FIX:", "").strip()
+            if len(parts) > 1:
+                tip = parts[1].strip()
+        else:
+            fix = str(ai_response) # Fallback to raw response or error dict
+        
+        return jsonify({
+            'verified_fix': fix,
+            'mentor_tip': tip,
+            'source': "Groq Llama-3 (Sovereign AI)"
+        })
+    except Exception as e:
+        print(f"CRITICAL ANALYZE ERROR: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/wiki/summarize', methods=['POST'])
+def api_wiki_summarize():
+    if not session.get('logged_in'): return jsonify({'error': 'Unauthorized'}), 401
+    data = request.json
+    query = data.get('query')
+    results = data.get('results', [])
+    
+    if not results:
+        return jsonify({'summary': "No context found to summarize."})
+    
+    context = "\n".join([f"- {r['title']}: {r['content'][:300]}..." for r in results])
+    
+    prompt = f"""
+USER SEARCH QUERY: {query}
+
+KNOWLEDGE BASE RESULTS:
+{context}
+
+TASK:
+Provide a concise, unified summary (3-4 sentences) that answers the user's query using the results above.
+If the results contain a specific solution, highlight it.
+"""
+    try:
+        summary = call_groq_ai(prompt, system_prompt="You are a CCAD Wiki Synthesis Assistant.")
+        return jsonify({'summary': summary})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/admin/force_sync', methods=['POST'])
+def api_admin_force_sync():
+    if not session.get('logged_in') or session.get('role') != 'admin':
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    try:
+        import sync_manager
+        sync_manager.auto_sync(force=True)
+        return jsonify({'status': 'success', 'message': 'FTS5 Index Rebuilt Successfully'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/backup', methods=['GET', 'POST'])
 def api_backup():

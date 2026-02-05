@@ -586,6 +586,15 @@
                                 <button class="btn btn-danger"
                                     onclick="document.getElementById('kbImportFile').click()">Select & Upload</button>
                             </div>
+                            <div class="card"
+                                style="background:var(--bg-tertiary); grid-column: span 2; border: 1px dashed var(--hw-red);">
+                                <h4>System Maintenance</h4>
+                                <p style="font-size:12px; color:var(--text-muted);">Rebuild the FTS5 search index from
+                                    scratch. Use this if the search results show 0 entries despite having files in the
+                                    Knowledge Base.</p>
+                                <button class="btn btn-primary" onclick="forceRebuildIndex()">Force Rebuild FTS
+                                    Index</button>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -938,7 +947,19 @@
                 return;
             }
 
-            list.innerHTML = results.map(r => `
+            // Add synthesis header
+            const query = document.getElementById('wikiSearchInput').value;
+            let html = `
+                <div style="background:var(--bg-tertiary); padding:20px; border-radius:12px; margin-bottom:20px; border:1px solid var(--border-soft); display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <h4 style="margin:0; font-size:14px;">Found ${results.length} relevant fragments</h4>
+                        <p style="font-size:11px; color:var(--text-muted); margin:4px 0 0 0;">Sovereign AI can synthesize these into a single answer.</p>
+                    </div>
+                    <button class="btn btn-sm btn-primary" onclick='summarizeWiki(${JSON.stringify(results).replace(/'/g, "&apos;")})'>✨ Ask Sovereign AI</button>
+                </div>
+            `;
+
+            html += results.map(r => `
                 <div class="card" style="border-left: 4px solid ${getSourceColor(r.source)}; margin-bottom: 20px; animation: slideIn 0.3s ease-out;">
                     <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 12px;">
                         <div>
@@ -978,29 +999,39 @@
                 const analysis = await res.json();
 
                 const modalHtml = `
-                    <div id="analysisModal" class="login-overlay">
-                        <div class="login-box" style="max-width: 600px; border-color:var(--hw-red);">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                                <h3 style="margin:0;">✨ Smart T1 Analysis</h3>
-                                <button onclick="this.closest('#analysisModal').remove()" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:24px;">&times;</button>
+                    <div id="analysisModal" class="login-overlay" style="z-index: 20000;">
+                        <div class="login-box" style="max-width: 800px; width: 95%; max-height: 85vh; display: flex; flex-direction: column; border-color:var(--hw-red); padding: 30px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-shrink: 0;">
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <span style="font-size:24px;">🤖</span>
+                                    <h3 style="margin:0;">Smart T1 Analysis</h3>
+                                </div>
+                                <button onclick="this.closest('#analysisModal').remove()" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:28px; line-height:1;">&times;</button>
                             </div>
                             
-                            <div style="margin-bottom:20px;">
-                                <h4 style="font-size:11px; text-transform:uppercase; color:var(--hw-red); margin-bottom:8px;">Verified Solution (from Wiki)</h4>
-                                <div style="background:var(--bg-tertiary); padding:15px; border-radius:10px; font-size:13px; border-left:3px solid var(--hw-red);">
-                                    ${formatMarkdown(analysis.verified_fix)}
+                            <div style="overflow-y: auto; flex: 1; padding-right: 15px; margin-right: -5px;">
+                                <div style="margin-bottom:24px;">
+                                    <h4 style="font-size:11px; text-transform:uppercase; color:var(--hw-red); margin-bottom:10px; letter-spacing:1px; font-weight:700;">✅ Verified Solution (from Wiki)</h4>
+                                    <div style="background:var(--bg-tertiary); padding:20px; border-radius:12px; font-size:14px; border-left:4px solid var(--hw-red); line-height: 1.6; color:var(--text-primary);">
+                                        ${formatMarkdown(analysis.verified_fix)}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div style="margin-bottom:20px;">
-                                <h4 style="font-size:11px; text-transform:uppercase; color:var(--ccad-blue); margin-bottom:8px;">T1 Mentor Advice (from Logs)</h4>
-                                <div style="background:var(--bg-tertiary); padding:15px; border-radius:10px; font-size:13px; border-left:3px solid var(--ccad-blue);">
-                                    ${formatMarkdown(analysis.mentor_tip)}
+                                <div style="margin-bottom:10px;">
+                                    <h4 style="font-size:11px; text-transform:uppercase; color:var(--ccad-blue); margin-bottom:10px; letter-spacing:1px; font-weight:700;">💡 T1 Mentor Advice</h4>
+                                    <div style="background:var(--bg-tertiary); padding:20px; border-radius:12px; font-size:14px; border-left:4px solid var(--ccad-blue); line-height: 1.6; color:var(--text-primary); font-style: italic;">
+                                        ${formatMarkdown(analysis.mentor_tip)}
+                                    </div>
                                 </div>
                             </div>
                             
-                            <div style="display:flex; gap:10px; justify-content:flex-end; pt:15px; border-top:1px solid var(--border-soft);">
+                            <div style="display:flex; gap:10px; justify-content:flex-end; padding-top:20px; margin-top:10px; border-top:1px solid var(--border-soft); flex-shrink: 0;">
+                                <div style="margin-right:auto; font-size:11px; color:var(--text-muted); display:flex; align-items:center; gap:5px;">
+                                    <span class="badge badge-low" style="font-size:9px;">Llama 3.1</span>
+                                    <span>Knowledge Source: CCAD Wiki</span>
+                                </div>
                                 <button class="btn btn-sm btn-secondary" onclick="this.closest('#analysisModal').remove()">Close Analysis</button>
+                                <button class="btn btn-sm btn-primary" onclick="window.print()">Print Fix</button>
                             </div>
                         </div>
                     </div>
@@ -1010,6 +1041,59 @@
                 showToast('AI Analysis failed', 3000);
             }
         }
+
+        async function summarizeWiki(results) {
+            const query = document.getElementById('wikiSearchInput').value;
+            showToast('🤖 Synthesizing Knowledge...', 2000);
+
+            try {
+                const res = await fetch('/api/wiki/summarize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query, results })
+                });
+                const data = await res.json();
+
+                const modalHtml = `
+                    <div id="summaryModal" class="login-overlay" style="z-index: 20000;">
+                        <div class="login-box" style="max-width: 650px; width: 95%; border-color:var(--ccad-blue); padding: 30px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <span style="font-size:24px;">✨</span>
+                                    <h3 style="margin:0;">Sovereign AI Synthesis</h3>
+                                </div>
+                                <button onclick="this.closest('#summaryModal').remove()" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:28px;">&times;</button>
+                            </div>
+                            <div style="font-size:15px; line-height:1.7; color:var(--text-primary); margin-bottom:20px; font-style: italic; background:var(--bg-tertiary); padding:20px; border-radius:12px; border-left:4px solid var(--ccad-blue);">
+                                ${formatMarkdown(data.summary)}
+                            </div>
+                            <div style="display:flex; justify-content:flex-end;">
+                                <button class="btn btn-sm btn-secondary" onclick="this.closest('#summaryModal').remove()">Dismiss</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.insertAdjacentHTML('beforeend', modalHtml);
+            } catch (err) {
+                showToast('Synthesis failed');
+            }
+        }
+
+        window.forceRebuildIndex = async () => {
+            if (!confirm('This will purge and rebuild the FTS5 search index. It may take a few seconds. Proceed?')) return;
+            showToast('🔄 Rebuilding Index...');
+            try {
+                const res = await fetch('/api/admin/force_sync', { method: 'POST' });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    showToast('✅ Index Rebuilt Successfully');
+                } else {
+                    showToast('❌ Rebuild Failed');
+                }
+            } catch (e) {
+                showToast('❌ Communication Error');
+            }
+        };
 
         window.viewWikiFull = (id, source) => {
             if (source === 'faq' || source === 'troubleshooting') {

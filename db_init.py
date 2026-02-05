@@ -13,7 +13,15 @@ def seed_db():
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     
-    # Create Table
+    # Users Table
+    c.execute('''CREATE TABLE IF NOT EXISTS users (
+                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                 username TEXT UNIQUE,
+                 password TEXT,
+                 role TEXT
+                 )''')
+    
+    # Knowledge Base Table
     c.execute('''CREATE TABLE IF NOT EXISTS knowledge_base (
                  id TEXT PRIMARY KEY,
                  type TEXT,

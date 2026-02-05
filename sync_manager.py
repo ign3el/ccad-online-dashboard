@@ -17,8 +17,8 @@ def get_file_hash(filepath):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
 
-def auto_sync():
-    """Check hashes and sync Knowledge Base if changes are detected."""
+def auto_sync(force=False):
+    """Check hashes and sync Knowledge Base if changes are detected, or if force is True."""
     if not os.path.exists('instance'):
         os.makedirs('instance')
         
@@ -52,8 +52,11 @@ def auto_sync():
         row = c.fetchone()
         last_hash = row[0] if row else None
         
-        if current_hash != last_hash:
-            print(f"🔄 Change detected in {filename}. Syncing...")
+        if force or current_hash != last_hash:
+            if force:
+                print(f"🔄 FORCED Sync: {filename}")
+            else:
+                print(f"🔄 Change detected in {filename}. Syncing...")
             sync_required = True
             
             with open(filename, 'r', encoding='utf-8') as f:
