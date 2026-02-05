@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   web:
     build: .
@@ -9,7 +7,10 @@ services:
     volumes:
       - ./instance:/app/instance
       - ./uploads:/app/uploads
+    shm_size: '256mb'
+    command: ["sh", "-c", "python db_init.py && exec gunicorn --timeout 60 --log-level info -w 2 -b 0.0.0.0:5101 app:app"]
     restart: always
     env_file: .env
     environment:
       - FLASK_ENV=production
+      - TZ=Asia/Dubai

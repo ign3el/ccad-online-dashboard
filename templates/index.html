@@ -973,7 +973,10 @@
                     </div>
                     <div style="margin-top:15px; pt:12px; border-top:1px solid var(--border-soft); display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:11px; color:var(--text-muted);">Category: <strong style="color:var(--hw-red);">${r.category}</strong></span>
-                        <button class="btn btn-xs btn-secondary" onclick="viewWikiFull('${r.kb_id}', '${r.source}')">Jump to Ref</button>
+                        <div style="display:flex; gap:8px;">
+                            <button class="btn btn-xs btn-secondary" style="border-color:var(--ccad-blue);" onclick="analyzeWikiEntry('${r.kb_id}', '${r.title.replace(/'/g, "\\'")}', '${r.content.replace(/'/g, "\\'").replace(/\n/g, " ")}')">✨ Analyze Fragments</button>
+                            <button class="btn btn-xs btn-secondary" onclick="viewWikiFull('${r.kb_id}', '${r.source}')">Jump to Ref</button>
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -1000,8 +1003,8 @@
 
                 const modalHtml = `
                     <div id="analysisModal" class="login-overlay" style="z-index: 20000;">
-                        <div class="ai-modal-box" style="max-width: 800px; width: 95%; max-height: 85vh; display: flex; flex-direction: column; padding: 30px; border-top: 4px solid var(--hw-red);">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-shrink: 0;">
+                        <div class="ai-modal-box" style="max-width: 800px; width: 95%; max-height: 90vh; display: flex; flex-direction: column; padding: 25px; border-top: 4px solid var(--hw-red);">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-shrink: 0;">
                                 <div style="display:flex; align-items:center; gap:10px;">
                                     <span style="font-size:24px;">🤖</span>
                                     <h3 style="margin:0;">Smart T1 Analysis</h3>
@@ -1009,7 +1012,7 @@
                                 <button onclick="this.closest('#analysisModal').remove()" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:28px; line-height:1;">&times;</button>
                             </div>
                             
-                            <div style="overflow-y: auto; flex: 1; padding-right: 15px; margin-right: -5px;">
+                            <div style="overflow-y: auto; flex: 1; padding-right: 10px; margin-right: -5px; min-height: 0;">
                                 <div style="margin-bottom:24px;">
                                     <h4 style="font-size:11px; text-transform:uppercase; color:var(--hw-red); margin-bottom:10px; letter-spacing:1px; font-weight:700;">✅ Verified Solution (from Wiki)</h4>
                                     <div style="background:var(--bg-tertiary); padding:20px; border-radius:12px; font-size:14px; border-left:4px solid var(--hw-red); line-height: 1.6; color:var(--text-primary);">
@@ -1042,6 +1045,11 @@
             }
         }
 
+        async function analyzeWikiEntry(id, title, content) {
+            const description = `TITLE: ${title}\nCONTEXT: ${content}`;
+            await analyzeLog(id, description);
+        }
+
         async function summarizeWiki(results) {
             const query = document.getElementById('wikiSearchInput').value;
             showToast('🤖 Synthesizing Knowledge...', 2000);
@@ -1056,18 +1064,20 @@
 
                 const modalHtml = `
                     <div id="summaryModal" class="login-overlay" style="z-index: 20000;">
-                        <div class="ai-modal-box" style="max-width: 650px; width: 95%; padding: 30px; border-top: 4px solid var(--ccad-blue);">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                        <div class="ai-modal-box" style="max-width: 650px; width: 95%; max-height: 90vh; display: flex; flex-direction: column; padding: 25px; border-top: 4px solid var(--ccad-blue);">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-shrink: 0;">
                                 <div style="display:flex; align-items:center; gap:10px;">
                                     <span style="font-size:24px;">✨</span>
                                     <h3 style="margin:0;">Sovereign AI Synthesis</h3>
                                 </div>
                                 <button onclick="this.closest('#summaryModal').remove()" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:28px;">&times;</button>
                             </div>
-                            <div style="font-size:15px; line-height:1.7; color:var(--text-primary); margin-bottom:20px; font-style: italic; background:var(--bg-tertiary); padding:20px; border-radius:12px; border-left:4px solid var(--ccad-blue);">
-                                ${formatMarkdown(data.summary)}
+                            <div style="overflow-y: auto; flex: 1; min-height: 0;">
+                                <div style="font-size:15px; line-height:1.7; color:var(--text-primary); margin-bottom:20px; font-style: italic; background:var(--bg-tertiary); padding:20px; border-radius:12px; border-left:4px solid var(--ccad-blue);">
+                                    ${formatMarkdown(data.summary)}
+                                </div>
                             </div>
-                            <div style="display:flex; justify-content:flex-end;">
+                            <div style="display:flex; justify-content:flex-end; padding-top:15px; border-top:1px solid var(--border-soft); flex-shrink: 0;">
                                 <button class="btn btn-sm btn-secondary" onclick="this.closest('#summaryModal').remove()">Dismiss</button>
                             </div>
                         </div>
