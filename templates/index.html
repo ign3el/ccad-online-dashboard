@@ -941,6 +941,7 @@
         }
 
         function renderWikiResults(results) {
+            window.LAST_WIKI_RESULTS = results; // Store for safe lookup
             const list = document.getElementById('wikiResultsList');
             if (results.length === 0) {
                 list.innerHTML = '<div style="padding:40px; text-align:center; color:var(--text-muted);">No matching knowledge found. Use a different term or check filters.</div>';
@@ -974,7 +975,7 @@
                     <div style="margin-top:15px; pt:12px; border-top:1px solid var(--border-soft); display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:11px; color:var(--text-muted);">Category: <strong style="color:var(--hw-red);">${r.category}</strong></span>
                         <div style="display:flex; gap:8px;">
-                            <button class="btn btn-xs btn-secondary" style="border-color:var(--ccad-blue);" onclick="analyzeWikiEntry('${r.kb_id}', '${r.title.replace(/'/g, "\\'")}', '${r.content.replace(/'/g, "\\'").replace(/\n/g, " ")}')">✨ Analyze Fragments</button>
+                            <button class="btn btn-xs btn-secondary" style="border-color:var(--ccad-blue);" onclick="analyzeWikiEntry('${r.kb_id}')">✨ Analyze Fragments</button>
                             <button class="btn btn-xs btn-secondary" onclick="viewWikiFull('${r.kb_id}', '${r.source}')">Jump to Ref</button>
                         </div>
                     </div>
@@ -1045,8 +1046,10 @@
             }
         }
 
-        async function analyzeWikiEntry(id, title, content) {
-            const description = `TITLE: ${title}\nCONTEXT: ${content}`;
+        async function analyzeWikiEntry(id) {
+            const result = window.LAST_WIKI_RESULTS.find(r => r.kb_id === id);
+            if (!result) return;
+            const description = `TITLE: ${result.title}\nCONTEXT: ${result.content}`;
             await analyzeLog(id, description);
         }
 
