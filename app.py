@@ -409,8 +409,7 @@ def api_wiki_summarize():
     conn.close()
 
     if results:
-        bible_context = "
-".join([f"- {r.get('title', 'Unknown')}: {r.get('content', '')[:500]}" for r in results])
+        bible_context = "\n".join([f"- {r.get('title', 'Unknown')}: {r.get('content', '')[:500]}" for r in results])
 
     # 2. Sovereign Intelligence Prompt (Persona + Intent + RAG)
     system_prompt = f"""
