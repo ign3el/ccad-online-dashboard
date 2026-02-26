@@ -175,7 +175,7 @@
                         <div class="stat-card">
                             <div class="stat-icon">🧠</div>
                             <div class="stat-content">
-                                <h3 id="statWikiCount">0</h3>
+                                <h3 id="statWikiCount">2240</h3>
                                 <p>Living Wiki Entries</p>
                             </div>
                         </div>
@@ -198,7 +198,7 @@
                                 <button class="quick-action-btn" data-action="wiki">
                                     <span class="icon">🧠</span>
                                     <span class="btn-title">Ask Wiki</span>
-                                    <span class="btn-desc" id="descWiki">Smart Search</span>
+                                    <span class="btn-desc" id="descWiki">Total: 2240 Knowledge Shreds</span>
                                 </button>
                                 <button class="quick-action-btn" data-action="faq">
                                     <span class="icon">❓</span>
@@ -2317,5 +2317,70 @@
         style="position:fixed; bottom:20px; right:20px; z-index:20000; display:flex; flex-direction:column-reverse;">
     </div>
 </body>
+
+    <!-- AI CHATBOT -->
+    <div class="ai-fab" id="aiFab" onclick="toggleAiChat()">✨</div>
+    <div class="ai-chat-window" id="aiChatWindow" style="display: none;">
+        <div class="ai-chat-header">
+            <div style="font-size:20px;">🤖</div>
+            <div class="ai-chat-title">Ign3el Support Bot</div>
+            <button onclick="toggleAiChat()" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:20px;">&times;</button>
+        </div>
+        <div class="ai-chat-messages" id="aiChatMessages">
+            <div class="ai-msg ai-msg-bot">
+                Hello! I'm Ign3el, your CCAD Support AI. How can I help you navigate the Support Bible today?
+            </div>
+        </div>
+        <div class="ai-chat-input-area">
+            <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="Type your question..." onkeypress="if(event.key === 'Enter') sendAiMessage()">
+            <button class="btn btn-xs btn-primary" onclick="sendAiMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleAiChat() {
+            const win = document.getElementById('aiChatWindow');
+            const isVisible = win.style.display === 'flex';
+            win.style.display = isVisible ? 'none' : 'flex';
+            if (!isVisible) document.getElementById('aiChatInput').focus();
+        }
+
+        async function sendAiMessage() {
+            const input = document.getElementById('aiChatInput');
+            const query = input.value.trim();
+            if (!query) return;
+
+            const container = document.getElementById('aiChatMessages');
+            
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'ai-msg ai-msg-user';
+            userMsg.textContent = query;
+            container.appendChild(userMsg);
+            input.value = '';
+            container.scrollTop = container.scrollHeight;
+
+            // Add thinking indicator
+            const botMsg = document.createElement('div');
+            botMsg.className = 'ai-msg ai-msg-bot';
+            botMsg.innerHTML = '<div class="loading-spinner" style="width:20px; height:20px; border-width:2px;"></div>';
+            container.appendChild(botMsg);
+            container.scrollTop = container.scrollHeight;
+
+            try {
+                // Use the bridge endpoint
+                const res = await fetch('/api/wiki/summarize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: query, results: [] })
+                });
+                const data = await res.json();
+                botMsg.innerHTML = formatMarkdown(data.summary || data.answer || "I couldn't find a specific answer in the Support Bible. Try rephrasing?");
+            } catch (err) {
+                botMsg.textContent = "Error connecting to Sovereign AI. Check bridge status.";
+            }
+            container.scrollTop = container.scrollHeight;
+        }
+    </script>
 
 </html>

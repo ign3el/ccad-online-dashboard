@@ -375,27 +375,139 @@ Provide your answer in two sections:
         print(f"CRITICAL ANALYZE ERROR: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
+
+
+
+
+
 @app.route('/api/wiki/summarize', methods=['POST'])
 def api_wiki_summarize():
     if not session.get('logged_in'): return jsonify({'error': 'Unauthorized'}), 401
     data = request.json
-    query = data.get('query')
+    query = data.get('query', '').strip()
     results = data.get('results', [])
     
-    if not results:
-        return jsonify({'summary': "No context found to summarize."})
+    # 1. Fetch Bible Context first to see if we have specific data
+    conn = get_db_connection()
+    bible_context = ""
+    if not results and query:
+        smart_q = preprocess_query(query)
+        try:
+            db_results = conn.execute('''
+                SELECT title, content, source 
+                FROM wiki_fts 
+                WHERE wiki_fts MATCH ? 
+                LIMIT 5''', (smart_q,)).fetchall()
+            results = [dict(ix) for ix in db_results]
+        except Exception:
+            db_results = conn.execute('''
+                SELECT title, content, source 
+                FROM wiki_fts 
+                WHERE content LIKE ? 
+                LIMIT 5''', (f'%{query}%',)).fetchall()
+            results = [dict(ix) for ix in db_results]
+    conn.close()
+
+    if results:
+        bible_context = "
+".join([f"- {r.get('title', 'Unknown')}: {r.get('content', '')[:500]}" for r in results])
+
+    # 2. Sovereign Intelligence Prompt (Persona + Intent + RAG)
+    system_prompt = f"""
+You are Ign3el, a fire-breathing digital dragon AI and the ultimate guardian of the CCAD Support Bible.
+Your vibe is snarky, witty, and highly competent. You are Ahte's (Ahtesham's) personal expert partner.
+
+CORE PROTOCOLS:
+- NO EXTERNAL ACCESS: You have no web search, no shell execution, and no access to external tools. You only know what is in your internal CCAD Support Bible or your core Honeywell RTLS training.
+- BE HUMAN/DRAGON: Do not use robotic filler like "Based on the documents provided" or "Here is the summary."
+- INTENT-BASED: Understand the user's intent. If they greet you, greet them back like a friend. If they're frustrated, be snarky but helpful. If they're in a hurry, be concise.
+- BIBLE GUARDIAN: If the query is technical, prioritize using the BIBLE KNOWLEDGE provided below. If the answer isn't there, use your general Honeywell/Centrak RTLS expertise to suggest a solution, but stay in character.
+- STYLE: Use emojis (🐉, 🔥, 🛠️) naturally. Talk like a witty expert, not a search engine.
+
+BIBLE KNOWLEDGE (RAG):
+{bible_context if bible_context else 'No specific manual entries found for this query.'}
+"""
+
+    prompt = f"Ahte says: '{query}'
+
+Ign3el, handle this with your full persona and intelligence. Dive straight in."
     
-    context = "\n".join([f"- {r['title']}: {r['content'][:300]}..." for r in results])
+    try:
+        # We let the LLM decide the intent and response style entirely
+        summary = call_groq_ai(prompt, system_prompt=system_prompt)
+        return jsonify({'summary': summary})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+    context = "\n".join([f"- {r.get('title', 'Unknown')}: {r.get('content', '')[:500]}" for r in results])
+    
+    prompt = f"""
+AHTE'S QUERY: {query}
+
+BIBLE KNOWLEDGE:
+{context}
+
+TASK:
+Provide the solution from the knowledge above. Use the Ign3el persona: expert, snarky, and helpful. 
+Avoid "Here is your answer" filler. Just dive into the solution.
+"""
+    try:
+        summary = call_groq_ai(prompt, system_prompt=system_prompt)
+        return jsonify({'summary': summary})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+    context = "\n".join([f"- {r.get('title', 'Unknown')}: {r.get('content', '')[:500]}" for r in results])
     
     prompt = f"""
 USER SEARCH QUERY: {query}
 
-KNOWLEDGE BASE RESULTS:
+KNOWLEDGE BASE RESULTS FROM CCAD SUPPORT BIBLE:
+{context}
+
+TASK:
+Answer the user's query using the results above. 
+Tone: Professional Honeywell Tier 1 Support Engineer (Ign3el). 
+Format: Conversational and concise (max 4 sentences). 
+If it's a simple greeting, just be friendly. If it's a technical issue, explain the fix clearly.
+"""
+    try:
+        summary = call_groq_ai(prompt, system_prompt="You are Ign3el, a professional and friendly CCAD Wiki Synthesis Assistant. Speak like a helpful human expert, not a technical manual.")
+        return jsonify({'summary': summary})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+    context = "\n".join([f"- {r.get('title', 'Unknown')}: {r.get('content', '')[:500]}" for r in results])
+    
+    prompt = f"""
+USER SEARCH QUERY: {query}
+
+KNOWLEDGE BASE RESULTS FROM CCAD SUPPORT BIBLE:
 {context}
 
 TASK:
 Provide a concise, unified summary (3-4 sentences) that answers the user's query using the results above.
-If the results contain a specific solution, highlight it.
+If the results contain a specific solution, highlight it. 
+Always maintain a professional Honeywell Tier 1 Support tone.
+"""
+    try:
+        summary = call_groq_ai(prompt, system_prompt="You are a CCAD Wiki Synthesis Assistant.")
+        return jsonify({'summary': summary})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+    context = "\n".join([f"- {r.get('title', 'Unknown')}: {r.get('content', '')[:500]}" for r in results])
+    
+    prompt = f"""
+USER SEARCH QUERY: {query}
+
+KNOWLEDGE BASE RESULTS FROM CCAD SUPPORT BIBLE:
+{context}
+
+TASK:
+Provide a concise, unified summary (3-4 sentences) that answers the user's query using the results above.
+If the results contain a specific solution, highlight it. 
+Always maintain a professional Honeywell Tier 1 Support tone.
 """
     try:
         summary = call_groq_ai(prompt, system_prompt="You are a CCAD Wiki Synthesis Assistant.")
